@@ -16,7 +16,8 @@ final class CartViewController: BaseViewController, UITableViewDelegate, UITable
     
     @objc
     private func createOrderButtonDidTap() {
-        viewModel.createOrder()
+        let orderConfirmVC = OrderConfirmViewController()
+        self.navigationController?.pushViewController(orderConfirmVC, animated: true)
     }
     
     override func viewDidLoad() {
@@ -38,19 +39,20 @@ final class CartViewController: BaseViewController, UITableViewDelegate, UITable
         view.addSubview(tableView)
         view.addSubview(createOrderButton)
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        createOrderButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: createOrderButton.topAnchor, constant: -16),
-            
-            createOrderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createOrderButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            createOrderButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95),
-            createOrderButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view.snp.left)
+            make.right.equalTo(view.snp.right)
+            make.bottom.equalTo(createOrderButton.snp.top).offset(-16)
+        }
+
+        createOrderButton.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.width.equalTo(view.snp.width).multipliedBy(0.95)
+            make.height.equalTo(50)
+        }
+
 
         
         viewModel.itemAdded = { [weak self] in

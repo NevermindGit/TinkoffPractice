@@ -1,49 +1,6 @@
 import UIKit
 import SnapKit
 
-protocol FilterHeaderDelegate: AnyObject {
-    func filterButtonDidTap()
-}
-
-
-final class FilterHeader: UICollectionReusableView {
-    
-    weak var delegate: FilterHeaderDelegate?
-    
-    private lazy var filterButton: BaseButton = {
-        let button = BaseButton()
-        button.setTitle("Фильтры", for: .normal)
-        button.layer.cornerRadius = 10
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        button.addTarget(self, action: #selector(filterButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc
-    private func filterButtonDidTap() {
-        delegate?.filterButtonDidTap()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        addSubview(filterButton)
-        
-        filterButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(16)
-            make.width.equalTo(105)
-            make.height.equalTo(30)
-        }
-    }
-}
 
 final class MainViewController: BaseViewController {
     
@@ -180,8 +137,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension MainViewController: UISearchResultsUpdating {
-    func updateSearchResults (for searchController: UISearchController) {
-        print(searchController.searchBar.text)
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        viewModel.filterItems(with: text) { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
 }
 

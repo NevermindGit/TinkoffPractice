@@ -39,6 +39,12 @@
 		7FB3A0282A53535600F90B1A /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A01A2A53535600F90B1A /* RegistrationViewController.swift */; };
 		7FB3A0292A53535600F90B1A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A01B2A53535600F90B1A /* TabBarController.swift */; };
 		7FB3A02A2A53535600F90B1A /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A01C2A53535600F90B1A /* RatingViewController.swift */; };
+		7FB3A02D2A541AFA00F90B1A /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A02C2A541AFA00F90B1A /* FilterViewModel.swift */; };
+		7FB3A02F2A541C1C00F90B1A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A02E2A541C1C00F90B1A /* SettingsViewController.swift */; };
+		7FB3A0322A542EA900F90B1A /* OrderConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A0312A542EA900F90B1A /* OrderConfirmViewController.swift */; };
+		7FB3A0342A5435F900F90B1A /* OrderConfirmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A0332A5435F900F90B1A /* OrderConfirmViewModel.swift */; };
+		7FB3A0372A543FDB00F90B1A /* OrderItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A0362A543FDB00F90B1A /* OrderItemCell.swift */; };
+		7FB3A0392A546B9B00F90B1A /* FilterHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A0382A546B9B00F90B1A /* FilterHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +81,12 @@
 		7FB3A01A2A53535600F90B1A /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		7FB3A01B2A53535600F90B1A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7FB3A01C2A53535600F90B1A /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		7FB3A02C2A541AFA00F90B1A /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
+		7FB3A02E2A541C1C00F90B1A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7FB3A0312A542EA900F90B1A /* OrderConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfirmViewController.swift; sourceTree = "<group>"; };
+		7FB3A0332A5435F900F90B1A /* OrderConfirmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfirmViewModel.swift; sourceTree = "<group>"; };
+		7FB3A0362A543FDB00F90B1A /* OrderItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemCell.swift; sourceTree = "<group>"; };
+		7FB3A0382A546B9B00F90B1A /* FilterHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +120,8 @@
 		7FB39FC72A53527B00F90B1A /* TinkoffPractice */ = {
 			isa = PBXGroup;
 			children = (
+				7FB3A0302A542E8900F90B1A /* OrderConfirm */,
+				7FB3A02B2A541AE400F90B1A /* Settings */,
 				7FB3A0102A53535600F90B1A /* Custom Views */,
 				7FB3A0082A53535600F90B1A /* Enums */,
 				7FB3A0162A53535600F90B1A /* Filter */,
@@ -154,6 +168,7 @@
 				7FB39FED2A53532200F90B1A /* MainViewController.swift */,
 				7FB39FEE2A53532200F90B1A /* MainViewModel.swift */,
 				7FB39FEF2A53532200F90B1A /* ItemsCell */,
+				7FB3A0382A546B9B00F90B1A /* FilterHeader.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -251,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				7FB3A0172A53535600F90B1A /* FilterViewController.swift */,
+				7FB3A02C2A541AFA00F90B1A /* FilterViewModel.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -262,6 +278,32 @@
 				7FB3A01A2A53535600F90B1A /* RegistrationViewController.swift */,
 			);
 			path = Registration;
+			sourceTree = "<group>";
+		};
+		7FB3A02B2A541AE400F90B1A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7FB3A02E2A541C1C00F90B1A /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7FB3A0302A542E8900F90B1A /* OrderConfirm */ = {
+			isa = PBXGroup;
+			children = (
+				7FB3A0312A542EA900F90B1A /* OrderConfirmViewController.swift */,
+				7FB3A0332A5435F900F90B1A /* OrderConfirmViewModel.swift */,
+				7FB3A0352A543FCD00F90B1A /* OrderItemCell */,
+			);
+			path = OrderConfirm;
+			sourceTree = "<group>";
+		};
+		7FB3A0352A543FCD00F90B1A /* OrderItemCell */ = {
+			isa = PBXGroup;
+			children = (
+				7FB3A0362A543FDB00F90B1A /* OrderItemCell.swift */,
+			);
+			path = OrderItemCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +391,7 @@
 				7FB3A0212A53535600F90B1A /* BackendService.swift in Sources */,
 				7FB3A0222A53535600F90B1A /* BaseViewController.swift in Sources */,
 				7FB3A0032A53532200F90B1A /* CartViewModel.swift in Sources */,
+				7FB3A0372A543FDB00F90B1A /* OrderItemCell.swift in Sources */,
 				7FB3A0272A53535600F90B1A /* RegistrationViewModel.swift in Sources */,
 				7FB39FE82A5352FA00F90B1A /* SceneDelegate.swift in Sources */,
 				7FB3A0242A53535600F90B1A /* BaseButton.swift in Sources */,
@@ -356,12 +399,17 @@
 				7FB3A0002A53532200F90B1A /* LoginViewModel.swift in Sources */,
 				7FB39FFE2A53532200F90B1A /* ItemCell.swift in Sources */,
 				7FB39FE72A5352FA00F90B1A /* AppDelegate.swift in Sources */,
+				7FB3A0392A546B9B00F90B1A /* FilterHeader.swift in Sources */,
 				7FB3A0022A53532200F90B1A /* CartViewController.swift in Sources */,
 				7FB3A01E2A53535600F90B1A /* DataManager.swift in Sources */,
 				7FB39FFB2A53532200F90B1A /* ItemDetailsViewController.swift in Sources */,
+				7FB3A0342A5435F900F90B1A /* OrderConfirmViewModel.swift in Sources */,
 				7FB39FFA2A53532200F90B1A /* ItemDetailsViewModel.swift in Sources */,
+				7FB3A02F2A541C1C00F90B1A /* SettingsViewController.swift in Sources */,
 				7FB3A0202A53535600F90B1A /* CoreDataService.swift in Sources */,
 				7FB3A0262A53535600F90B1A /* FilterViewController.swift in Sources */,
+				7FB3A0322A542EA900F90B1A /* OrderConfirmViewController.swift in Sources */,
+				7FB3A02D2A541AFA00F90B1A /* FilterViewModel.swift in Sources */,
 				7FB39FD32A53527B00F90B1A /* TinkoffPractice.xcdatamodeld in Sources */,
 				7FB39FE22A53529700F90B1A /* User+CoreDataProperties.swift in Sources */,
 				7FB39FFD2A53532200F90B1A /* MainViewModel.swift in Sources */,

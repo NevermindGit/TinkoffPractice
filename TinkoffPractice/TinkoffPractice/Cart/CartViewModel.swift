@@ -7,7 +7,6 @@ protocol CartViewModelProtocol: AnyObject {
     
     func item(at index: Int) -> Item
     func removeItem(at index: Int)
-    func createOrder()
 }
 
 
@@ -26,10 +25,6 @@ final class CartViewModel: CartViewModelProtocol {
     func removeItem(at index: Int) {
         CartManager.shared.removeItem(at: index)
         itemAdded?()
-    }
-    
-    func createOrder() {
-        // Реализуйте логику создания заказа здесь
     }
 
     init() {

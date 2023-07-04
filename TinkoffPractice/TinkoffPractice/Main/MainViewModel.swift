@@ -6,6 +6,7 @@ protocol MainViewModelProtocol: AnyObject {
     func numberOfRows() -> Int
     func getProductsCellViewModel(at indexPath: IndexPath) -> ItemCellViewModelProtocol
     func getProductsDetailsViewModel(at indexPath: IndexPath) -> ItemDetailsViewModelProtocol
+    func filterItems(with searchText: String, completion: @escaping () -> Void)
 }
 
 
@@ -15,8 +16,19 @@ final class MainViewModel: MainViewModelProtocol {
     
     private var items: [Item] = []
     
+    private var searchedItems: [Item]?
+    
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
+    }
+    
+    func filterItems(with searchText: String, completion: @escaping () -> Void) {
+        if searchText.isEmpty {
+            searchedItems = nil
+        } else {
+            searchedItems = items.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+        completion()
     }
     
     func fetchProductsFromServer(completion: @escaping (Result<[Item], Error>) -> Void) {
@@ -34,15 +46,24 @@ final class MainViewModel: MainViewModelProtocol {
     }
     
     func numberOfRows() -> Int {
-        items.count
+        searchedItems?.count ?? items.count
     }
     
     func getProductsCellViewModel(at indexPath: IndexPath) -> ItemCellViewModelProtocol {
-        ItemCellViewModel(item: items[indexPath.row])
+        ItemCellViewModel(item: getItem(at: indexPath))
+    }
+
+    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ItemDetailsViewModelProtocol {
+        ItemDetailsViewModel(item: getItem(at: indexPath))
     }
     
-    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ItemDetailsViewModelProtocol {
-        ItemDetailsViewModel(item: items[indexPath.row])
+    private func getItem(at indexPath: IndexPath) -> Item {
+        if let searchedItems = searchedItems {
+            return searchedItems[indexPath.row]
+        } else {
+            return items[indexPath.row]
+        }
     }
+
     
 }
