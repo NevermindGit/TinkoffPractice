@@ -2,46 +2,25 @@ import UIKit
 import SnapKit
 
 
-class RegistrationViewController: BaseViewController {
+final class RegistrationViewController: BaseViewController {
     
-    var viewModel: RegistrationViewModelProtocol!
-    private let dataManager = DataManager.shared
+    private var viewModel: RegistrationViewModelProtocol!
+    private let dataManager: DataManagerProtocol
+    
+    init(dataManager: DataManagerProtocol) {
+        self.dataManager = dataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - Properties
-    private let loginTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Номер телефона или почта"
-        textField.layer.cornerRadius = 10
-        textField.autocapitalizationType = .none
-        textField.backgroundColor = .systemGray6
-        return textField
-    }()
-    
-    private let userInfoTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Имя Фамилия"
-        textField.layer.cornerRadius = 10
-        textField.backgroundColor = .systemGray6
-        return textField
-    }()
-    
-    private var passwordTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Пароль"
-        textField.layer.cornerRadius = 10
-        textField.backgroundColor = .systemGray6
-        textField.isSecureTextEntry = true
-        return textField
-    }()
-    
-    private let confirmPasswordTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Подтвердите пароль"
-        textField.layer.cornerRadius = 10
-        textField.backgroundColor = .systemGray6
-        textField.isSecureTextEntry = true
-        return textField
-    }()
+    private lazy var loginTextField = createTextField(placeholder: "Номер телефона или почта")
+    private lazy var userInfoTextField = createTextField(placeholder: "Имя Фамилия")
+    private lazy var passwordTextField = createTextField(placeholder: "Пароль", isSecure: true)
+    private lazy var confirmPasswordTextField = createTextField(placeholder: "Подтвердите пароль", isSecure: true)
     
     private lazy var registerButton: BaseButton = {
         let button = BaseButton(type: .roundedRect)
@@ -94,6 +73,16 @@ class RegistrationViewController: BaseViewController {
         bindViewModel()
         setupUI()
     }
+    
+    private func createTextField(placeholder: String, isSecure: Bool = false) -> BaseTextField {
+        let textField = BaseTextField()
+        textField.placeholder = placeholder
+        textField.layer.cornerRadius = 10
+        textField.autocapitalizationType = .none
+        textField.backgroundColor = .systemGray6
+        textField.isSecureTextEntry = isSecure
+        return textField
+    }
 
     
     private func setupUI() {
@@ -105,51 +94,50 @@ class RegistrationViewController: BaseViewController {
         let segmentedControl = UISegmentedControl(items: ["Покупатель", "Продавец"])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-
+        
         view.addSubview(segmentedControl)
         
         loginTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(view.frame.height * 0.075)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(40)
         }
         
         userInfoTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(loginTextField.snp.bottom).offset(view.frame.height * 0.025)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(loginTextField.snp.bottom).offset(20)
+            make.width.equalTo(loginTextField)
+            make.height.equalTo(loginTextField)
         }
-
+        
         passwordTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(userInfoTextField.snp.bottom).offset(view.frame.height * 0.025)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(userInfoTextField.snp.bottom).offset(20)
+            make.width.equalTo(loginTextField)
+            make.height.equalTo(loginTextField)
         }
-
+        
         confirmPasswordTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(passwordTextField.snp.bottom).offset(view.frame.height * 0.025)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            make.width.equalTo(loginTextField)
+            make.height.equalTo(loginTextField)
         }
         
         segmentedControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(confirmPasswordTextField.snp.bottom).offset(view.frame.height * 0.025)
-            make.width.equalTo(view.frame.width * 0.95)
-            make.height.equalTo(view.frame.height * 0.04)
-        }
-
-        registerButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(segmentedControl.snp.bottom).offset(view.frame.height * 0.04)
-            make.width.equalTo(view.frame.width * 0.95)
-            make.height.equalTo(view.frame.height * 0.06)
+            make.top.equalTo(confirmPasswordTextField.snp.bottom).offset(20)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(loginTextField)
         }
         
+        registerButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(segmentedControl.snp.bottom).offset(30)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(50)
+        }
     }
     
 }

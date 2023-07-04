@@ -5,24 +5,23 @@ import SnapKit
 class LoginViewController: BaseViewController {
     
     private var viewModel: LoginViewModelProtocol!
-    private let dataManager = DataManager.shared
+    private let dataManager: DataManagerProtocol
+    
+    init(dataManager: DataManagerProtocol) {
+        self.dataManager = dataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     
     //MARK: - Properties
     
-    private let loginTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Введите логин"
-        textField.autocapitalizationType = .none
-        return textField
-    }()
+    private lazy var loginTextField: BaseTextField = createTextField(placeholder: "Введите логин")
     
-    private let passwordTextField: BaseTextField = {
-        let textField = BaseTextField()
-        textField.placeholder = "Введите пароль"
-        textField.isSecureTextEntry = true
-        return textField
-    }()
+    private lazy var passwordTextField: BaseTextField = createTextField(placeholder: "Введите пароль", isSecure: true)
     
     private let noAccountLabel: UILabel = {
         let label = UILabel()
@@ -64,7 +63,6 @@ class LoginViewController: BaseViewController {
         self.title = "Здравствуйте"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-//        CoreDataService.shared.fetchAllUsers()
         setupUI()
         bindViewModel()
     }
@@ -99,11 +97,20 @@ class LoginViewController: BaseViewController {
     }
 
     private func handleGoToRegistrationButtonTap() {
-        let regVC = RegistrationViewController()
+        let regVC = RegistrationViewController(dataManager: DataManager.shared)
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(regVC, animated: true)
         }
     }
+    
+    private func createTextField(placeholder: String, isSecure: Bool = false) -> BaseTextField {
+        let textField = BaseTextField()
+        textField.placeholder = placeholder
+        textField.autocapitalizationType = .none
+        textField.isSecureTextEntry = isSecure
+        return textField
+    }
+
     
     private func setupUI() {
         view.addSubview(loginTextField)
@@ -121,29 +128,30 @@ class LoginViewController: BaseViewController {
         
         loginTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(view.frame.height * 0.15)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(40)
         }
-        
+
         passwordTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(loginTextField.snp.bottom).offset(view.frame.height * 0.025)
-            make.width.equalTo(view.frame.width * 0.9)
-            make.height.equalTo(view.frame.height * 0.04)
+            make.top.equalTo(loginTextField.snp.bottom).offset(20)
+            make.width.equalTo(loginTextField)
+            make.height.equalTo(loginTextField)
         }
-        
+
         stackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(passwordTextField.snp.bottom).offset(view.frame.height * 0.01)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(10)
         }
-        
+
         continueButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(stackView.snp.bottom).offset(view.frame.height * 0.04)
-            make.width.equalTo(view.frame.width * 0.95)
-            make.height.equalTo(view.frame.height * 0.06)
+            make.top.equalTo(stackView.snp.bottom).offset(30)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(40)
         }
+
 
     }
 }

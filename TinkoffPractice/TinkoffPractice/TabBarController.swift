@@ -1,6 +1,6 @@
 import UIKit
 
-class MainTabBarController: UITabBarController {
+final class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,7 +12,6 @@ class MainTabBarController: UITabBarController {
         let mainNavVC = UINavigationController(rootViewController: MainViewController())
         mainNavVC.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "house"), tag: 0)
         
-//        mainNavVC.
 
         let basketNavVC = UINavigationController(rootViewController: CartViewController())
         basketNavVC.tabBarItem = UITabBarItem(title: "Basket", image: UIImage(systemName: "basket"), tag: 1)
