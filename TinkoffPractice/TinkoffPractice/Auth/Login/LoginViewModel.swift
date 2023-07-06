@@ -24,8 +24,9 @@ class LoginViewModel: LoginViewModelProtocol {
                 print("Role: \(role)")
                 UserCredentials.saveToCoreData(accessToken: token, userRole: role)
                 completion(true)
+            } else {
+                completion(false)
             }
-            completion(false)
         }
     }
 

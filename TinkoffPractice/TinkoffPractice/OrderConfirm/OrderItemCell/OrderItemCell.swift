@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class OrderItemCell: UITableViewCell {
+final class OrderItemCell: UITableViewCell {
     private let itemInCartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill

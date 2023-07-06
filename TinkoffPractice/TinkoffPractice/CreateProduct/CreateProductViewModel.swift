@@ -9,13 +9,12 @@ protocol CreateProductViewModelProtocol: AnyObject {
     func createProduct(name: String?, description: String?, price: String?, image: UIImage?)
 }
 
-class CreateProductViewModel: CreateProductViewModelProtocol {
+final class CreateProductViewModel: CreateProductViewModelProtocol {
     var onImageSelection: ((UIImage) -> Void)?
     var onProductCreation: ((Bool) -> Void)?
 
     func selectImage() {
-        // Image selection logic here.
-        // onImageSelection should be called with the selected image.
+        
     }
 
     func createProduct(name: String?, description: String?, price: String?, image: UIImage?) {
@@ -28,7 +27,6 @@ class CreateProductViewModel: CreateProductViewModelProtocol {
             return
         }
 
-        // You might want to store UIImage as Data into CoreData
         guard let imageData = image.jpegData(compressionQuality: 1.0) else { return }
 
         let productAttributes: [String: Any] = [
@@ -39,7 +37,6 @@ class CreateProductViewModel: CreateProductViewModelProtocol {
             "image": imageData
         ]
 
-//        CoreDataService.shared.saveObject(Product.self, attributes: productAttributes)
         onProductCreation?(true)
     }
 }

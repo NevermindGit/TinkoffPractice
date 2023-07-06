@@ -5,8 +5,11 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
     
     private lazy var imageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "camera_image"), for: .normal)
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 60, weight: .medium)
+        let image = UIImage(systemName: "camera.fill", withConfiguration: symbolConfiguration)
+        button.setImage(image, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .systemGray
         button.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         button.imageView?.clipsToBounds = true
         button.layer.cornerRadius = 14
@@ -14,6 +17,7 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
         button.addTarget(self, action: #selector(cameraButtonDidTap), for: .touchUpInside)
         return button
     }()
+
     
     private lazy var productNameTextField: BaseTextField = createTextField(placeholder: "Название")
     private lazy var productDescriptionTextField: BaseTextField = createTextField(placeholder: "Описание")
@@ -38,6 +42,10 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
     }
     
     private func setupUI() {
+        
+        title = "Добавить"
+        navigationItem.largeTitleDisplayMode = .always
+        
         view.addSubview(imageButton)
         view.addSubview(productNameTextField)
         view.addSubview(productDescriptionTextField)
@@ -46,7 +54,7 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
         
         imageButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
             make.width.height.equalTo(200)
         }
         
@@ -70,8 +78,9 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
         }
         
         createProductButton.snp.makeConstraints { make in
-            make.top.equalTo(productPriceTextField.snp.bottom).offset(20)
-            make.leading.trailing.equalTo(productNameTextField)
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
+            make.width.equalTo(view.snp.width).multipliedBy(0.9)
             make.height.equalTo(56)
         }
     }

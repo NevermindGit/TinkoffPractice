@@ -25,19 +25,12 @@ final class RegistrationViewController: BaseViewController {
         let items = ["Покупатель", "Продавец"]
         let sc = UISegmentedControl(items: items)
         sc.selectedSegmentIndex = 0
-        sc.addTarget(self, action: #selector(userRoleDidChange), for: .valueChanged)
         return sc
     }()
-    
-    @objc
-    private func userRoleDidChange(_ sender: UISegmentedControl) {
-
-    }
 
     private lazy var registerButton: BaseButton = {
-        let button = BaseButton(type: .roundedRect)
+        let button = BaseButton()
         button.setTitle("Продолжить", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.addTarget(self, action: #selector(registerButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -66,8 +59,6 @@ final class RegistrationViewController: BaseViewController {
             self?.navigationController?.popToRootViewController(animated: true)
         }
     }
-
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

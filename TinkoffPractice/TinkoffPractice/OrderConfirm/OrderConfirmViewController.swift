@@ -62,7 +62,7 @@ final class OrderConfirmViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Подтверждение заказа"
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
         setupUI()
         bindViewModel()
     }

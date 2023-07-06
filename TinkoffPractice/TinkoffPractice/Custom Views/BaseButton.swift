@@ -14,6 +14,7 @@ class BaseButton: UIButton {
         backgroundColor = UIColor.systemYellow
         layer.cornerRadius = 14
         setTitleColor(.black, for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
     }
 
 }

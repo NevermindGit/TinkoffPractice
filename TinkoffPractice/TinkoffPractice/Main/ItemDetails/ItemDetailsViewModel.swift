@@ -10,7 +10,7 @@ protocol ItemDetailsViewModelProtocol {
     func addToCart()
 }
 
-class ItemDetailsViewModel: ItemDetailsViewModelProtocol {
+final class ItemDetailsViewModel: ItemDetailsViewModelProtocol {
 
     var itemName: String {
         didSet {

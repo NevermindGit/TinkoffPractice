@@ -17,7 +17,7 @@ final class DataManager: DataManagerProtocol {
     private init() {}
 
     func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String) {
-        print("User \(login) with role \(userRole)was added to DB")
+        print("User \(login) with role \(userRole) was added to DB")
     }
     
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void) {
@@ -91,6 +91,10 @@ final class DataManager: DataManagerProtocol {
         completion: @escaping (([Item]) -> Void)
     ) {
 
+    }
+    
+    func getUserRole() -> String {
+        UserCredentials.loadFromCoreData()?.userRole ?? "none"
     }
 
 }

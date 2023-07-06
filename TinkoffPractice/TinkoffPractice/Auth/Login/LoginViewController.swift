@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController {
 
     private var viewModel: LoginViewModelProtocol!
     private let dataManager: DataManagerProtocol
@@ -38,9 +38,8 @@ class LoginViewController: BaseViewController {
     }()
 
     private lazy var continueButton: BaseButton = {
-        let button = BaseButton(type: .roundedRect)
+        let button = BaseButton()
         button.setTitle("Войти", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.addTarget(self, action: #selector(continueButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -58,8 +57,7 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Здравствуйте"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.hidesBackButton = true
+        navigationItem.largeTitleDisplayMode = .always
 
         setupUI()
         bindViewModel()
@@ -148,7 +146,7 @@ class LoginViewController: BaseViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(stackView.snp.bottom).offset(30)
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
+            make.height.equalTo(56)
         }
 
     }

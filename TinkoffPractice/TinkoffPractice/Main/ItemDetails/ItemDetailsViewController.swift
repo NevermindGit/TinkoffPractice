@@ -1,6 +1,6 @@
 import UIKit
 
-class ItemDetailsViewController: BaseViewController {
+final class ItemDetailsViewController: BaseViewController {
 
     private let itemTitleLabel: UILabel = {
         let label = UILabel()

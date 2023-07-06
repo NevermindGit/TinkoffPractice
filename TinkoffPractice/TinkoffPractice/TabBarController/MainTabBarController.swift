@@ -12,7 +12,7 @@ final class MainTabBarController: UITabBarController {
     }
 
     func configureViewControllers() {
-        let userRole = UserCredentials.loadFromCoreData()?.userRole ?? ""
+        guard let userRole = UserCredentials.loadFromCoreData()?.userRole else { return }
         viewControllers = viewModel.getViewControllers(for: userRole)
     }
 }

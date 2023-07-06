@@ -121,7 +121,7 @@ final class FilterViewController: UIViewController {
         saveFilterButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.95)
+            make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalToSuperview().multipliedBy(0.06)
         }
     }

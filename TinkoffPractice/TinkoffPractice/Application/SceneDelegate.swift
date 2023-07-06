@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // No credentials found, show the login screen
             let loginVC = LoginViewController(dataManager: DataManager.shared)
             let navigationController = UINavigationController(rootViewController: loginVC)
+            navigationController.navigationBar.prefersLargeTitles = true
             window?.rootViewController = navigationController
         }
         window?.makeKeyAndVisible()

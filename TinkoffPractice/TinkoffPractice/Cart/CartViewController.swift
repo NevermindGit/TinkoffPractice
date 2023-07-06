@@ -15,7 +15,7 @@ final class CartViewController: BaseViewController {
     private lazy var createOrderButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Оформить заказ", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+//        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.addTarget(self, action: #selector(createOrderButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -52,7 +52,7 @@ final class CartViewController: BaseViewController {
 
     private func configureUI() {
         navigationItem.title = "Cart"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
 
         view.addSubview(tableView)
         view.addSubview(createOrderButton)
@@ -71,8 +71,8 @@ final class CartViewController: BaseViewController {
         createOrderButton.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.width.equalTo(view.snp.width).multipliedBy(0.95)
-            make.height.equalTo(50)
+            make.width.equalTo(view.snp.width).multipliedBy(0.9)
+            make.height.equalTo(56)
         }
     }
 }
@@ -103,9 +103,7 @@ extension CartViewController: UITableViewDataSource {
         return cell!
     }
 
-    func tableView(
-        _ tableView: UITableView,
-        commit editingStyle: UITableViewCell.EditingStyle,
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
