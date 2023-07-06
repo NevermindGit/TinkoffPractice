@@ -12,10 +12,10 @@
 		7F9B17B52A56F825009E3F76 /* Credentials.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B32A56F825009E3F76 /* Credentials.xcdatamodeld */; };
 		7F9B17B72A56F869009E3F76 /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B62A56F869009E3F76 /* UserCredentials.swift */; };
 		7F9B17BA2A571EAE009E3F76 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B92A571EAE009E3F76 /* MainTabBarViewModel.swift */; };
-		7FB39FD32A53527B00F90B1A /* TinkoffPractice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FD12A53527B00F90B1A /* TinkoffPractice.xcdatamodeld */; };
+		7F9B17BC2A5730A3009E3F76 /* CreateProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17BB2A5730A3009E3F76 /* CreateProductViewModel.swift */; };
+		7F9B17BE2A5749B0009E3F76 /* SettingsOptionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17BD2A5749B0009E3F76 /* SettingsOptionEnum.swift */; };
 		7FB39FD52A53527C00F90B1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39FD42A53527C00F90B1A /* Assets.xcassets */; };
 		7FB39FD82A53527C00F90B1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39FD62A53527C00F90B1A /* LaunchScreen.storyboard */; };
-		7FB39FE22A53529700F90B1A /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FE02A53529700F90B1A /* User+CoreDataProperties.swift */; };
 		7FB39FE72A5352FA00F90B1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FE52A5352FA00F90B1A /* AppDelegate.swift */; };
 		7FB39FE82A5352FA00F90B1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FE62A5352FA00F90B1A /* SceneDelegate.swift */; };
 		7FB39FFA2A53532200F90B1A /* ItemDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FEB2A53532200F90B1A /* ItemDetailsViewModel.swift */; };
@@ -30,7 +30,6 @@
 		7FB3A0032A53532200F90B1A /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FF72A53532200F90B1A /* CartViewModel.swift */; };
 		7FB3A0042A53532200F90B1A /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB39FF92A53532200F90B1A /* CartCell.swift */; };
 		7FB3A0072A53533900F90B1A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7FB3A0062A53533900F90B1A /* SnapKit */; };
-		7FB3A01D2A53535600F90B1A /* UserRoles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A0092A53535600F90B1A /* UserRoles.swift */; };
 		7FB3A01E2A53535600F90B1A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A00B2A53535600F90B1A /* DataManager.swift */; };
 		7FB3A01F2A53535600F90B1A /* CartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A00C2A53535600F90B1A /* CartManager.swift */; };
 		7FB3A0202A53535600F90B1A /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB3A00E2A53535600F90B1A /* CoreDataService.swift */; };
@@ -58,12 +57,12 @@
 		7F9B17B42A56F825009E3F76 /* Credentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Credentials.xcdatamodel; sourceTree = "<group>"; };
 		7F9B17B62A56F869009E3F76 /* UserCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCredentials.swift; sourceTree = "<group>"; };
 		7F9B17B92A571EAE009E3F76 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
+		7F9B17BB2A5730A3009E3F76 /* CreateProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductViewModel.swift; sourceTree = "<group>"; };
+		7F9B17BD2A5749B0009E3F76 /* SettingsOptionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptionEnum.swift; sourceTree = "<group>"; };
 		7FB39FC52A53527B00F90B1A /* TinkoffPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FB39FD22A53527B00F90B1A /* TinkoffPractice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffPractice.xcdatamodel; sourceTree = "<group>"; };
 		7FB39FD42A53527C00F90B1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FB39FD72A53527C00F90B1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FB39FD92A53527C00F90B1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7FB39FE02A53529700F90B1A /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7FB39FE52A5352FA00F90B1A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FB39FE62A5352FA00F90B1A /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7FB39FEB2A53532200F90B1A /* ItemDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -77,7 +76,6 @@
 		7FB39FF62A53532200F90B1A /* CartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		7FB39FF72A53532200F90B1A /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		7FB39FF92A53532200F90B1A /* CartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
-		7FB3A0092A53535600F90B1A /* UserRoles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRoles.swift; sourceTree = "<group>"; };
 		7FB3A00B2A53535600F90B1A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		7FB3A00C2A53535600F90B1A /* CartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartManager.swift; sourceTree = "<group>"; };
 		7FB3A00E2A53535600F90B1A /* CoreDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
@@ -115,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				7F9B17792A56CDF8009E3F76 /* CreateProductViewController.swift */,
+				7F9B17BB2A5730A3009E3F76 /* CreateProductViewModel.swift */,
 			);
 			path = CreateProduct;
 			sourceTree = "<group>";
@@ -174,8 +173,6 @@
 				7FB39FD42A53527C00F90B1A /* Assets.xcassets */,
 				7FB39FD62A53527C00F90B1A /* LaunchScreen.storyboard */,
 				7FB39FD92A53527C00F90B1A /* Info.plist */,
-				7F9B17B32A56F825009E3F76 /* Credentials.xcdatamodeld */,
-				7F9B17B62A56F869009E3F76 /* UserCredentials.swift */,
 			);
 			path = TinkoffPractice;
 			sourceTree = "<group>";
@@ -183,8 +180,8 @@
 		7FB39FE32A5352B300F90B1A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				7FB39FE02A53529700F90B1A /* User+CoreDataProperties.swift */,
-				7FB39FD12A53527B00F90B1A /* TinkoffPractice.xcdatamodeld */,
+				7F9B17B32A56F825009E3F76 /* Credentials.xcdatamodeld */,
+				7F9B17B62A56F869009E3F76 /* UserCredentials.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -258,7 +255,7 @@
 		7FB3A0082A53535600F90B1A /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				7FB3A0092A53535600F90B1A /* UserRoles.swift */,
+				7F9B17BD2A5749B0009E3F76 /* SettingsOptionEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -453,6 +450,7 @@
 				7FB3A0252A53535600F90B1A /* Item.swift in Sources */,
 				7FB3A0232A53535600F90B1A /* BaseTextField.swift in Sources */,
 				7FB3A0212A53535600F90B1A /* BackendService.swift in Sources */,
+				7F9B17BC2A5730A3009E3F76 /* CreateProductViewModel.swift in Sources */,
 				7FB3A0222A53535600F90B1A /* BaseViewController.swift in Sources */,
 				7FB3A0032A53532200F90B1A /* CartViewModel.swift in Sources */,
 				7FB3A0372A543FDB00F90B1A /* OrderItemCell.swift in Sources */,
@@ -466,6 +464,7 @@
 				7F9B17BA2A571EAE009E3F76 /* MainTabBarViewModel.swift in Sources */,
 				7FB3A0392A546B9B00F90B1A /* FilterHeader.swift in Sources */,
 				7FB3A0022A53532200F90B1A /* CartViewController.swift in Sources */,
+				7F9B17BE2A5749B0009E3F76 /* SettingsOptionEnum.swift in Sources */,
 				7FB3A01E2A53535600F90B1A /* DataManager.swift in Sources */,
 				7FB39FFB2A53532200F90B1A /* ItemDetailsViewController.swift in Sources */,
 				7FB3A0342A5435F900F90B1A /* OrderConfirmViewModel.swift in Sources */,
@@ -476,13 +475,10 @@
 				7FB3A0262A53535600F90B1A /* FilterViewController.swift in Sources */,
 				7FB3A0322A542EA900F90B1A /* OrderConfirmViewController.swift in Sources */,
 				7FB3A02D2A541AFA00F90B1A /* FilterViewModel.swift in Sources */,
-				7FB39FD32A53527B00F90B1A /* TinkoffPractice.xcdatamodeld in Sources */,
-				7FB39FE22A53529700F90B1A /* User+CoreDataProperties.swift in Sources */,
 				7FB39FFD2A53532200F90B1A /* MainViewModel.swift in Sources */,
 				7F9B17B12A56DF9B009E3F76 /* User.swift in Sources */,
 				7F9B17B52A56F825009E3F76 /* Credentials.xcdatamodeld in Sources */,
 				7FB3A0292A53535600F90B1A /* MainTabBarController.swift in Sources */,
-				7FB3A01D2A53535600F90B1A /* UserRoles.swift in Sources */,
 				7FB39FFF2A53532200F90B1A /* ItemCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -732,16 +728,6 @@
 			);
 			currentVersion = 7F9B17B42A56F825009E3F76 /* Credentials.xcdatamodel */;
 			path = Credentials.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		7FB39FD12A53527B00F90B1A /* TinkoffPractice.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				7FB39FD22A53527B00F90B1A /* TinkoffPractice.xcdatamodel */,
-			);
-			currentVersion = 7FB39FD22A53527B00F90B1A /* TinkoffPractice.xcdatamodel */;
-			path = TinkoffPractice.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

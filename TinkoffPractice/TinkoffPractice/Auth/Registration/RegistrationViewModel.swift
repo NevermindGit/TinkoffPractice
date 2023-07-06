@@ -2,8 +2,7 @@ import Foundation
 
 protocol RegistrationViewModelProtocol {
     var registerButtonButtonTapped: (() -> Void)? { get set }
-    func addUserToDatabase(login: String, userInfo: String, password: String)
-    var userRole: UserRoles { get set }
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String)
 }
 
 final class RegistrationViewModel: RegistrationViewModelProtocol {
@@ -11,13 +10,11 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
 
     var registerButtonButtonTapped: (() -> Void)?
 
-    var userRole: UserRoles = .none
-
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
     }
 
-    func addUserToDatabase(login: String, userInfo: String, password: String) {
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String) {
         dataManager.addUserToDatabase(login: login, userInfo: userInfo, password: password, userRole: userRole)
     }
 }

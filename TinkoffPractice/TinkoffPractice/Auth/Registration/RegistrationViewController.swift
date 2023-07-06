@@ -26,14 +26,12 @@ final class RegistrationViewController: BaseViewController {
         let sc = UISegmentedControl(items: items)
         sc.selectedSegmentIndex = 0
         sc.addTarget(self, action: #selector(userRoleDidChange), for: .valueChanged)
-        viewModel.userRole = .buyer
         return sc
     }()
     
     @objc
     private func userRoleDidChange(_ sender: UISegmentedControl) {
-        viewModel.userRole = sender.selectedSegmentIndex == 0 ? .buyer : .seller
-        print("Current user role is: \(viewModel.userRole)")
+
     }
 
     private lazy var registerButton: BaseButton = {
@@ -61,12 +59,14 @@ final class RegistrationViewController: BaseViewController {
         guard let login = loginTextField.text else { return }
         guard let userInfo = userInfoTextField.text else { return }
         guard let pass = passwordTextField.text else { return }
-        viewModel.addUserToDatabase(login: login, userInfo: userInfo, password: pass)
-        
+        let userRole = userRoleSegmentedControl.selectedSegmentIndex == 0 ? "Покупатель" : "Продавец"
+        viewModel.addUserToDatabase(login: login, userInfo: userInfo, password: pass, userRole: userRole)
+            
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)
         }
     }
+
 
     
     override func viewDidLoad() {
@@ -82,7 +82,6 @@ final class RegistrationViewController: BaseViewController {
         let textField = BaseTextField()
         textField.placeholder = placeholder
         textField.autocapitalizationType = .none
-        textField.backgroundColor = .systemGray6
         textField.isSecureTextEntry = isSecure
         return textField
     }

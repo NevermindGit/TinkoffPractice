@@ -3,7 +3,7 @@ import UIKit
 import Alamofire
 
 protocol DataManagerProtocol: AnyObject {
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: UserRoles)
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String)
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void)
     func fetchAllItems(completion: @escaping (([Item]) -> Void))
     func fetchItemsWithFilter(
@@ -16,8 +16,8 @@ final class DataManager: DataManagerProtocol {
     public static let shared = DataManager()
     private init() {}
 
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: UserRoles) {
-        print("User \(login) was added to DB")
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String) {
+        print("User \(login) with role \(userRole)was added to DB")
     }
     
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void) {

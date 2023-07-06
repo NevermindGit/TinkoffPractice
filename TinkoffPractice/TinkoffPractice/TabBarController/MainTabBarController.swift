@@ -8,6 +8,7 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         viewModel = MainTabBarViewModel()
         configureViewControllers()
+        tabBar.tintColor = .black
     }
 
     func configureViewControllers() {

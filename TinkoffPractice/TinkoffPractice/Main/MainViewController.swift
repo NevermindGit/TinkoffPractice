@@ -27,7 +27,7 @@ final class MainViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
 
-        title = "Main"
+        title = "Главная"
         navigationController?.navigationBar.prefersLargeTitles = true
         setupSearchController()
         setupUI()

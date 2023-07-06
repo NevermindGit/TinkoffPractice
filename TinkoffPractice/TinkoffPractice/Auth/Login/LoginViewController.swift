@@ -18,7 +18,6 @@ class LoginViewController: BaseViewController {
     // MARK: - Properties
 
     private lazy var loginTextField: BaseTextField = createTextField(placeholder: "Введите логин")
-
     private lazy var passwordTextField: BaseTextField = createTextField(placeholder: "Введите пароль", isSecure: true)
 
     private let noAccountLabel: UILabel = {
