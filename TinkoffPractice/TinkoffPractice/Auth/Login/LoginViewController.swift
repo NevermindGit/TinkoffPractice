@@ -87,6 +87,7 @@ class LoginViewController: BaseViewController {
             guard let self = self else { return }
             if exist {
                 DispatchQueue.main.async {
+                    mainTabBar.configureViewControllers()
                     self.present(mainTabBar, animated: true)
                 }
             } else {
@@ -94,6 +95,7 @@ class LoginViewController: BaseViewController {
             }
         }
     }
+
 
     private func handleGoToRegistrationButtonTap() {
         let regVC = RegistrationViewController(dataManager: DataManager.shared)
