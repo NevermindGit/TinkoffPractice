@@ -3,6 +3,7 @@ import UIKit
 
 protocol MainTabBarViewModelProtocol {
     func getViewControllers(for role: String) -> [UIViewController]
+    func getTabBarAppearance(for style: UIUserInterfaceStyle) -> UITabBarAppearance
 }
 
 final class MainTabBarViewModel: MainTabBarViewModelProtocol {
@@ -31,4 +32,17 @@ final class MainTabBarViewModel: MainTabBarViewModelProtocol {
 
         return [mainNavVC, middleNavVC, settingsNavVC]
     }
+    
+    func getTabBarAppearance(for style: UIUserInterfaceStyle) -> UITabBarAppearance {
+        let appearance = UITabBarAppearance()
+        appearance.stackedLayoutAppearance.selected.iconColor = style == .dark ? .white : .black
+        appearance.stackedLayoutAppearance.normal.iconColor = style == .dark ? .lightGray : .gray
+
+        // Updating the title colors
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: style == .dark ? UIColor.white : UIColor.black]
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: style == .dark ? UIColor.lightGray : UIColor.gray]
+
+        return appearance
+    }
+
 }

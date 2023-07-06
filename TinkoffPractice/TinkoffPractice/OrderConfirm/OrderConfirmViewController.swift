@@ -11,7 +11,7 @@ final class OrderConfirmViewController: BaseViewController {
         tableView.register(OrderItemCell.self, forCellReuseIdentifier: "OrderItemCell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemBackground
         return tableView
     }()
 
@@ -23,12 +23,14 @@ final class OrderConfirmViewController: BaseViewController {
 
     private let userNameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         label.text = "User Name"
         return label
     }()
 
     private let userPhoneLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         label.text = "User Phone"
         return label
     }()
@@ -41,12 +43,14 @@ final class OrderConfirmViewController: BaseViewController {
 
     private let deliveryFeeLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         label.text = "Доставка: 100"
         return label
     }()
 
     private let totalSumLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         label.text = "Итого: "
         return label
     }()
@@ -117,10 +121,10 @@ final class OrderConfirmViewController: BaseViewController {
         }
 
         paymentButton.snp.makeConstraints { make in
-            make.top.equalTo(totalSumLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(50)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
+            make.width.equalTo(view.snp.width).multipliedBy(0.9)
+            make.height.equalTo(56)
         }
     }
 

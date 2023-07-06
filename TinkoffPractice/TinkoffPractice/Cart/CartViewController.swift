@@ -15,7 +15,6 @@ final class CartViewController: BaseViewController {
     private lazy var createOrderButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Оформить заказ", for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.addTarget(self, action: #selector(createOrderButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -74,6 +73,8 @@ final class CartViewController: BaseViewController {
             make.width.equalTo(view.snp.width).multipliedBy(0.9)
             make.height.equalTo(56)
         }
+        
+        tableView.backgroundColor = .systemBackground
     }
 }
 
@@ -82,10 +83,6 @@ final class CartViewController: BaseViewController {
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
     }
 }
 

@@ -125,7 +125,7 @@ final class RegistrationViewController: BaseViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(userRoleSegmentedControl.snp.bottom).offset(30)
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(50)
+            make.height.equalTo(56)
         }
     }
 

@@ -23,8 +23,8 @@ final class LoginViewController: BaseViewController {
     private let noAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "Нет аккаунта?"
+        label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .black
         return label
     }()
 

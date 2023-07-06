@@ -8,7 +8,16 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         viewModel = MainTabBarViewModel()
         configureViewControllers()
-        tabBar.tintColor = .black
+        updateTabBarAppearance()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateTabBarAppearance()
+    }
+
+    func updateTabBarAppearance() {
+        tabBar.standardAppearance = viewModel.getTabBarAppearance(for: traitCollection.userInterfaceStyle)
     }
 
     func configureViewControllers() {

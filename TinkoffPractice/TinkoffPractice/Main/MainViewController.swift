@@ -67,6 +67,8 @@ final class MainViewController: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        collectionView.backgroundColor = .systemBackground
     }
 
     private func setupHeaderView() {

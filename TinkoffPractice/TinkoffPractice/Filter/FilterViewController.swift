@@ -1,11 +1,11 @@
 import UIKit
 import SnapKit
 
-final class FilterViewController: UIViewController {
+final class FilterViewController: BaseViewController {
 
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.textColor = .label
         label.text = "Цена, ₿"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         return label
@@ -27,7 +27,7 @@ final class FilterViewController: UIViewController {
 
     private let categoriesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.textColor = .label
         label.text = "Категории"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         return label
@@ -57,8 +57,6 @@ final class FilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
-
         view.addSubview(priceLabel)
         view.addSubview(minPriceTextField)
         view.addSubview(maxPriceTextField)
@@ -75,6 +73,7 @@ final class FilterViewController: UIViewController {
         for category in categories {
             let button = BaseButton()
             button.setTitle(category, for: .normal)
+            button.setTitleColor(.label, for: .normal)
             button.backgroundColor = .systemGray5
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
             let buttonWidth = button.intrinsicContentSize.width + 20
@@ -119,10 +118,10 @@ final class FilterViewController: UIViewController {
         }
 
         saveFilterButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalToSuperview().multipliedBy(0.06)
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
+            make.width.equalTo(view.snp.width).multipliedBy(0.9)
+            make.height.equalTo(56)
         }
     }
 

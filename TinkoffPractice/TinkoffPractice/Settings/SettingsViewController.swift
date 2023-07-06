@@ -4,7 +4,7 @@ final class SettingsViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private var settingsOptions: [SettingsOption] = [.account, .balance, .darkMode, .aboutApp]
+    private var viewModel: SettingsViewModelProtocol!
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -35,6 +35,7 @@ final class SettingsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = SettingsViewModel()
         configureUI()
     }
     
@@ -42,18 +43,16 @@ final class SettingsViewController: BaseViewController {
     
     @objc
     private func exitButtonDidTap() {
-        UserCredentials.deleteFromCoreData()
-        
-        let navLoginVC = UINavigationController(rootViewController: LoginViewController(dataManager: DataManager.shared))
-        navLoginVC.modalPresentationStyle = .fullScreen
-        present(navLoginVC, animated: true)
+        viewModel.didTapExitButton()
     }
 
     @objc
     private func handleDarkModeSwitch(_ sender: UISwitch) {
-        print("Dark Mode: \(sender.isOn)")
+        viewModel.handleDarkModeSwitch(isOn: sender.isOn)
+        // reload table view to update the icon colors
+        tableView.reloadData()
     }
-    
+
     private func configureUI() {
         navigationItem.title = "Настройки"
         navigationItem.largeTitleDisplayMode = .always
@@ -61,19 +60,9 @@ final class SettingsViewController: BaseViewController {
         view.addSubview(tableView)
         view.addSubview(exitButton)
 
-        configureCellViaRole()
         setupConstraints()
-
     }
     
-    private func configureCellViaRole() {
-        if UserCredentials.loadFromCoreData()?.userRole == "Покупатель" {
-            settingsOptions.insert(.ordersHistory, at: 1)
-        } else {
-            settingsOptions.insert(.myProducts, at: 1)
-        }
-    }
-
     private func setupConstraints() {
         tableView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -96,31 +85,12 @@ final class SettingsViewController: BaseViewController {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let option = settingsOptions[indexPath.row]
-        tableView.deselectRow(at: indexPath, animated: true)
-        print("Selected \(option.title)")
-        
-        guard let title = OptionTitle(rawValue: option.title) else { return }
-        switch title {
-        case .account:
-            let accountVC = AccountViewController()
-            navigationController?.pushViewController(accountVC, animated: true)
-        case .ordersHistory:
-            let ordersHistoryVC = OrdersHistoryViewController()
-            navigationController?.pushViewController(ordersHistoryVC, animated: true)
-        case .myProducts:
-            let myProductsVC = MyProductsViewController()
-            navigationController?.pushViewController(myProductsVC, animated: true)
-        case .balance:
-            let balanceVC = BalanceViewController()
-            navigationController?.pushViewController(balanceVC, animated: true)
-        case .aboutApp:
-            let aboutAppVC = AboutAppViewController()
-            navigationController?.pushViewController(aboutAppVC, animated: true)
+        if let controller = viewModel.didSelectOption(at: indexPath.row) {
+            navigationController?.pushViewController(controller, animated: true)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -130,17 +100,19 @@ extension SettingsViewController: UITableViewDelegate {
 
 extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingsOptions.count
+        return viewModel.settingsOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let option = settingsOptions[indexPath.row] 
-        cell.textLabel?.text = option.title
-        cell.imageView?.image = option.icon?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        cell.accessoryType = option.accessoryType
+        cell.textLabel?.text = viewModel.getTitle(forOptionAt: indexPath.row)
         
-        if option == .darkMode {
+        let darkMode = (traitCollection.userInterfaceStyle == .dark)
+        cell.imageView?.image = viewModel.getIcon(forOptionAt: indexPath.row, inDarkMode: darkMode)
+        
+        cell.accessoryType = viewModel.getAccessoryType(forOptionAt: indexPath.row)
+        
+        if viewModel.shouldDisplayDarkModeSwitch(forOptionAt: indexPath.row) {
             cell.accessoryView = darkModeSwitch
         } else {
             cell.accessoryView = nil
