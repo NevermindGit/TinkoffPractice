@@ -70,7 +70,7 @@ final class CartViewController: BaseViewController {
 
         createOrderButton.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
             make.width.equalTo(view.snp.width).multipliedBy(0.9)
             make.height.equalTo(56)
         }

@@ -18,7 +18,8 @@ final class SettingsViewController: BaseViewController {
     private lazy var exitButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Выйти", for: .normal)
-//        button.backgroundColor = .systemRed
+        button.backgroundColor = .systemRed
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(exitButtonDidTap), for: .touchUpInside)
         return button
     }()
