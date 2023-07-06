@@ -3,9 +3,7 @@ import SnapKit
 
 final class CartViewController: BaseViewController {
     // MARK: - Properties
-    
     private var viewModel: CartViewModelProtocol!
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CartCell.self, forCellReuseIdentifier: "CartCell")
@@ -14,7 +12,6 @@ final class CartViewController: BaseViewController {
         tableView.backgroundColor = .white
         return tableView
     }()
-    
     private lazy var createOrderButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Оформить заказ", for: .normal)
@@ -22,7 +19,6 @@ final class CartViewController: BaseViewController {
         button.addTarget(self, action: #selector(createOrderButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -31,7 +27,6 @@ final class CartViewController: BaseViewController {
         bindViewModel()
         updateOrderButtonState()
     }
-    
     // MARK: - Private Methods
 
     @objc
@@ -82,7 +77,6 @@ final class CartViewController: BaseViewController {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 
 extension CartViewController: UITableViewDelegate {
@@ -95,7 +89,6 @@ extension CartViewController: UITableViewDelegate {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension CartViewController: UITableViewDataSource {
@@ -104,13 +97,17 @@ extension CartViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as! CartCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as? CartCell
         let item = viewModel.item(at: indexPath.row)
-        cell.configure(with: item)
-        return cell
+        cell?.configure(with: item)
+        return cell!
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
         if editingStyle == .delete {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)

@@ -1,82 +1,66 @@
 import UIKit
 import CoreData
 
-
-// MARK: - CRUD
 public final class CoreDataService: NSObject {
     public static let shared = CoreDataService()
     private override init() {}
-    
+
     private var appDelegate: AppDelegate {
-        UIApplication.shared.delegate as! AppDelegate
+        UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()
     }
-    
+
     private var context: NSManagedObjectContext {
         appDelegate.persistentContainer.viewContext
     }
-    
 
-    public func saveUser(_ id: Int16, userInfo: String) {
-        guard let userEntityDescription = NSEntityDescription.entity(forEntityName: "User", in: context) else {
+    public func saveObject<T: NSManagedObject>(_ object: T.Type, attributes: [String: Any]) {
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: String(describing: T.self), in: context) else {
             return
         }
-        let user = User(entity: userEntityDescription, insertInto: context)
-        user.id = id
-        user.userInfo = userInfo
-        
+        let newObject = T(entity: entityDescription, insertInto: context)
+        for (key, value) in attributes {
+            newObject.setValue(value, forKey: key)
+        }
         appDelegate.saveContext()
     }
-    
-    public func fetchAllUsers() -> [User] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        do {
-            return (try? context.fetch(fetchRequest) as? [User]) ?? []
-        }
+
+    public func fetchAllObjects<T: NSManagedObject>(_ object: T.Type) -> [T] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: T.self))
+        return (try? context.fetch(fetchRequest) as? [T]) ?? []
     }
-    
-    public func fetchUser(with id: Int16) -> User? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-        do {
-            let users = try? context.fetch(fetchRequest) as? [User]
-            return users?.first
-        }
+
+    public func fetchObject<T: NSManagedObject>(_ object: T.Type, predicate: NSPredicate) -> T? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: T.self))
+        fetchRequest.predicate = predicate
+        return (try? context.fetch(fetchRequest) as? [T])?.first
     }
-    
-    public func updateUser(with id: Int16, newUserInfo: String, password: String? = nil) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-        do {
-            guard let users = try? context.fetch(fetchRequest) as? [User],
-                  let user = users.first  else { return }
-            
-            user.userInfo = newUserInfo
-            user.password = password
+
+    public func updateObject<T: NSManagedObject>(_ object: T.Type, predicate: NSPredicate, newValues: [String: Any]) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: T.self))
+        fetchRequest.predicate = predicate
+        guard let objects = try? context.fetch(fetchRequest) as? [T],
+              let objectToUpdate = objects.first else { return }
+
+        for (key, value) in newValues {
+            objectToUpdate.setValue(value, forKey: key)
         }
-        
         appDelegate.saveContext()
     }
-    
-    public func deleteAllUsers(with id: Int16) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        do {
-            let users = try? context.fetch(fetchRequest) as? [User]
-            users?.forEach {context.delete($0) }
-        }
-        
+
+    public func deleteAllObjects<T: NSManagedObject>(_ object: T.Type) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: T.self))
+        let objects = try? context.fetch(fetchRequest) as? [T]
+        objects?.forEach { context.delete($0) }
         appDelegate.saveContext()
     }
-    
-    public func deleteUser(with id: Int16) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-        do {
-            guard let users = try? context.fetch(fetchRequest) as? [User],
-                  let user = users.first  else { return }
-            
-            context.delete(user)
-        }
-        
+
+    public func deleteObject<T: NSManagedObject>(_ object: T.Type, predicate: NSPredicate) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: T.self))
+        fetchRequest.predicate = predicate
+        guard let objects = try? context.fetch(fetchRequest) as? [T],
+              let objectToDelete = objects.first else { return }
+
+        context.delete(objectToDelete)
         appDelegate.saveContext()
     }
 }

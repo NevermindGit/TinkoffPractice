@@ -1,15 +1,13 @@
 import UIKit
 
-
 protocol FilterHeaderDelegate: AnyObject {
     func filterButtonDidTap()
 }
 
-
 final class FilterHeader: UICollectionReusableView {
-    
+
     weak var delegate: FilterHeaderDelegate?
-    
+
     private lazy var filterButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Фильтры", for: .normal)
@@ -18,24 +16,24 @@ final class FilterHeader: UICollectionReusableView {
         button.addTarget(self, action: #selector(filterButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+
     @objc
     private func filterButtonDidTap() {
         delegate?.filterButtonDidTap()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI() {
         addSubview(filterButton)
-        
+
         filterButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().inset(16)

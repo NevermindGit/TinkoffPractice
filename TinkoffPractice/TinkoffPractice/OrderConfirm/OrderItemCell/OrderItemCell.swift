@@ -5,7 +5,6 @@ class OrderItemCell: UITableViewCell {
     private let itemInCartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
         return imageView
@@ -14,29 +13,28 @@ class OrderItemCell: UITableViewCell {
     private var titleLabel = UILabel()
     private var priceLabel = UILabel()
     private var quantityLabel = UILabel()
-    
     private var quantity = 1
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         setupViews()
         setupConstraints()
     }
-    
+
     private func setupViews() {
         quantityLabel.text = "\(quantity)"
-        
+
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        
+
         contentView.backgroundColor = .systemGray5
-        
+
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(itemInCartImageView)
         contentView.addSubview(quantityLabel)
     }
-    
+
     private func setupConstraints() {
         itemInCartImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(10)

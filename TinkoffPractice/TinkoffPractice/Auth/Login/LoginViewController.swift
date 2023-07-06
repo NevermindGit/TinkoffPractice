@@ -1,28 +1,26 @@
 import UIKit
 import SnapKit
 
-
 class LoginViewController: BaseViewController {
-    
+
     private var viewModel: LoginViewModelProtocol!
     private let dataManager: DataManagerProtocol
-    
+
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
-    //MARK: - Properties
-    
+    // MARK: - Properties
+
     private lazy var loginTextField: BaseTextField = createTextField(placeholder: "Введите логин")
-    
+
     private lazy var passwordTextField: BaseTextField = createTextField(placeholder: "Введите пароль", isSecure: true)
-    
+
     private let noAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "Нет аккаунта?"
@@ -30,7 +28,7 @@ class LoginViewController: BaseViewController {
         label.textColor = .black
         return label
     }()
-    
+
     private lazy var goToRegistrartionButton: UIButton = {
         let button = UIButton()
         button.setTitle("Регистрация", for: .normal)
@@ -39,7 +37,7 @@ class LoginViewController: BaseViewController {
         button.addTarget(self, action: #selector(goToRegistrartionButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var continueButton: BaseButton = {
         let button = BaseButton(type: .roundedRect)
         button.setTitle("Войти", for: .normal)
@@ -47,26 +45,27 @@ class LoginViewController: BaseViewController {
         button.addTarget(self, action: #selector(continueButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+
     @objc
     private func goToRegistrartionButtonDidTap() {
         viewModel.goToRegistrationButtonTapped?()
     }
-    
+
     @objc
     private func continueButtonDidTap() {
         viewModel.loginButtonTapped?()
     }
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Здравствуйте"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        navigationItem.hidesBackButton = true
+
         setupUI()
         bindViewModel()
     }
-    
+
     private func bindViewModel() {
         viewModel = LoginViewModel(dataManager: dataManager)
         viewModel.loginButtonTapped = { [weak self] in
@@ -76,7 +75,7 @@ class LoginViewController: BaseViewController {
             self?.handleGoToRegistrationButtonTap()
         }
     }
-    
+
     private func handleLoginButtonTap() {
         guard let login = loginTextField.text else { return }
         guard let pass = passwordTextField.text else { return }
@@ -98,11 +97,11 @@ class LoginViewController: BaseViewController {
 
     private func handleGoToRegistrationButtonTap() {
         let regVC = RegistrationViewController(dataManager: DataManager.shared)
-        DispatchQueue.main.async {
-            self.navigationController?.pushViewController(regVC, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.pushViewController(regVC, animated: true)
         }
     }
-    
+
     private func createTextField(placeholder: String, isSecure: Bool = false) -> BaseTextField {
         let textField = BaseTextField()
         textField.placeholder = placeholder
@@ -111,21 +110,20 @@ class LoginViewController: BaseViewController {
         return textField
     }
 
-    
     private func setupUI() {
         view.addSubview(loginTextField)
         view.addSubview(passwordTextField)
         view.addSubview(noAccountLabel)
         view.addSubview(goToRegistrartionButton)
         view.addSubview(continueButton)
-        
+
         let stackView = UIStackView(arrangedSubviews: [noAccountLabel, goToRegistrartionButton])
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.alignment = .center
-        
+
         view.addSubview(stackView)
-        
+
         loginTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
@@ -152,7 +150,5 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
 
-
     }
 }
-

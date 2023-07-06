@@ -1,7 +1,7 @@
 import UIKit
 
 final class CartCell: UITableViewCell {
-    
+
     private let itemInCartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -10,37 +10,37 @@ final class CartCell: UITableViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    
+
     private var titleLabel = UILabel()
     private var priceLabel = UILabel()
     private var quantityLabel = UILabel()
     private var minusButton = UIButton()
     private var plusButton = UIButton()
     private var quantity = 1
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupViews() {
         quantityLabel.text = "\(quantity)"
-        
+
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        
+
         minusButton.setImage(UIImage(systemName: "minus.square"), for: .normal)
         minusButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
-        
+
         plusButton.setImage(UIImage(systemName: "plus.square"), for: .normal)
         plusButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
-        
+
         contentView.backgroundColor = .systemGray5
-        
+
         contentView.addSubview(itemInCartImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
@@ -48,7 +48,7 @@ final class CartCell: UITableViewCell {
         contentView.addSubview(minusButton)
         contentView.addSubview(plusButton)
     }
-    
+
     func setupConstraints() {
         itemInCartImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(10)
@@ -83,20 +83,20 @@ final class CartCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
     }
-    
+
     func configure(with item: Item) {
         itemInCartImageView.image = item.image
         titleLabel.text = item.name
         priceLabel.text = "\(item.price) ₿"
     }
-    
+
     @objc func decreaseQuantity() {
         if quantity > 1 {
             quantity -= 1
             quantityLabel.text = "\(quantity)"
         }
     }
-    
+
     @objc func increaseQuantity() {
         quantity += 1
         quantityLabel.text = "\(quantity)"

@@ -1,15 +1,12 @@
 import Foundation
 
-
 protocol CartViewModelProtocol: AnyObject {
     var numberOfItems: Int { get }
     var itemAdded: (() -> Void)? { get set }
-    
+
     func item(at index: Int) -> Item
     func removeItem(at index: Int)
 }
-
-
 
 final class CartViewModel: CartViewModelProtocol {
     var itemAdded: (() -> Void)?
@@ -21,7 +18,7 @@ final class CartViewModel: CartViewModelProtocol {
     func item(at index: Int) -> Item {
         CartManager.shared.getItems()[index]
     }
-    
+
     func removeItem(at index: Int) {
         CartManager.shared.removeItem(at: index)
         itemAdded?()
@@ -35,4 +32,3 @@ final class CartViewModel: CartViewModelProtocol {
         }
     }
 }
-

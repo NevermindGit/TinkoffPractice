@@ -123,13 +123,12 @@ final class OrderConfirmViewController: BaseViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
     }
-    
+
     private func bindViewModel() {
         viewModel = OrderConfirmViewModel()
     }
 
 }
-
 
 // MARK: - UITableViewDelegate
 
@@ -143,7 +142,6 @@ extension OrderConfirmViewController: UITableViewDelegate {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension OrderConfirmViewController: UITableViewDataSource {
@@ -152,7 +150,14 @@ extension OrderConfirmViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OrderItemCell", for: indexPath) as! OrderItemCell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "OrderItemCell",
+            for: indexPath
+        ) as? OrderItemCell else {
+            assertionFailure("Failed to dequeue OrderItemCell")
+            return UITableViewCell()
+        }
+
         let item = viewModel.item(at: indexPath.row)
         cell.configure(with: item)
         return cell

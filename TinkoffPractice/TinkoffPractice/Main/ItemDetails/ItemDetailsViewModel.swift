@@ -1,7 +1,5 @@
 import UIKit
 
-
-
 protocol ItemDetailsViewModelProtocol {
     init(item: Item)
     var itemName: String { get }
@@ -12,10 +10,9 @@ protocol ItemDetailsViewModelProtocol {
     func addToCart()
 }
 
-
 class ItemDetailsViewModel: ItemDetailsViewModelProtocol {
-    
-    var itemName: String{
+
+    var itemName: String {
         didSet {
             itemDidChange?()
         }
@@ -35,11 +32,11 @@ class ItemDetailsViewModel: ItemDetailsViewModelProtocol {
             itemDidChange?()
         }
     }
-    
+
     var itemDidChange: (() -> Void)?
-    
+
     private let item: Item
-    
+
     required init(item: Item) {
         self.item = item
         self.itemName = item.name
@@ -47,9 +44,9 @@ class ItemDetailsViewModel: ItemDetailsViewModelProtocol {
         self.itemPrice = "\(item.price)"
         self.itemImage = item.image
     }
-    
+
     func addToCart() {
         CartManager.shared.addItem(item)
     }
-    
+
 }

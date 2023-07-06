@@ -1,8 +1,7 @@
 import Foundation
 
-
 final class CartManager {
-    
+
     static let shared = CartManager()
     private var items: [Item] = []
     var itemAdded: ((Item) -> Void)?
