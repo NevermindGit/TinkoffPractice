@@ -1,7 +1,11 @@
 import UIKit
 import SnapKit
 
-final class CreateProductViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+final class CreateProductViewController: BaseViewController {
+    
+    // MARK: - Properties
+    
+    private var viewModel: CreateProductViewModelProtocol!
     
     private lazy var imageButton: UIButton = {
         let button = UIButton()
@@ -30,10 +34,14 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
         return button
     }()
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
+    
+    // MARK: - Private methods
     
     private func createTextField(placeholder: String) -> BaseTextField {
         let textField = BaseTextField()
@@ -86,13 +94,45 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
     }
     
     @objc
-    private func cameraButtonDidTap() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        present(imagePickerController, animated: true, completion: nil)
+    private func createProductButtonDidTap() {
+        guard let name = productNameTextField.text,
+              let description = productDescriptionTextField.text,
+              let price = productPriceTextField.text,
+              let image = imageButton.image(for: .normal) else {
+            showErrorAlert(title: "Ошибка",message: "Заполните все поля и выберите фото")
+            return
+        }
+        
+        // Instantiate ViewModel with entered values
+        viewModel = CreateProductViewModel(productName: name, productDescription: description, productPrice: price, productImage: image)
+        
+        if !viewModel.validateFields() {
+            showErrorAlert(title: "Ошибка",message: "Убедитесь, что все поля заполнены, а цена указана как число")
+            return
+        }
+        
+        viewModel.createProduct { [weak self] success in
+            if success {
+                self?.showErrorAlert(title: "Добавлено", message: "Ваш товар успешно добавлен!")
+                self?.tabBarController?.selectedIndex = 0
+            } else {
+                self?.showErrorAlert(title: "Ошибка", message: "Возника ошибка при создании товара")
+            }
+        }
+
     }
     
+    private func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension CreateProductViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             imageButton.setImage(pickedImage.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -103,9 +143,17 @@ final class CreateProductViewController: BaseViewController, UIImagePickerContro
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension CreateProductViewController: UINavigationControllerDelegate {
     @objc
-    private func createProductButtonDidTap() {
-        
+    private func cameraButtonDidTap() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
     }
 }
+

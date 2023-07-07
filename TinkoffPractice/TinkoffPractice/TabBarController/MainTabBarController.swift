@@ -2,7 +2,7 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
 
-    var viewModel: MainTabBarViewModelProtocol!
+    private var viewModel: MainTabBarViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,7 @@ final class MainTabBarController: UITabBarController {
     }
 
     func configureViewControllers() {
-        guard let userRole = UserCredentials.loadFromCoreData()?.userRole else { return }
+        let userRole = DataManager.shared.getUserRole()
         viewControllers = viewModel.getViewControllers(for: userRole)
     }
 }

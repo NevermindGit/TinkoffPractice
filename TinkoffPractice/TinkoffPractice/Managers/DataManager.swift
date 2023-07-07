@@ -15,16 +15,17 @@ protocol DataManagerProtocol: AnyObject {
 final class DataManager: DataManagerProtocol {
     public static let shared = DataManager()
     private init() {}
+    
+    private let host = "http://127.0.0.1:5001"
 
     func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String) {
         print("User \(login) with role \(userRole) was added to DB")
     }
     
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void) {
-        let endpoint = "http://127.0.0.1:5001/login"
         let parameters: Parameters = ["username": login, "password": password]
         
-        BackendService.shared.sendRequest(endpoint: endpoint, method: .post, parameters: parameters) { data, response, error in
+        BackendService.shared.sendRequest(endpoint: "\(host)/login", method: .post, parameters: parameters) { data, response, error in
             if let error = error {
                 print("Произошла ошибка: \(error)")
                 completion(false, "", "")
@@ -96,5 +97,44 @@ final class DataManager: DataManagerProtocol {
     func getUserRole() -> String {
         UserCredentials.loadFromCoreData()?.userRole ?? "none"
     }
+    
+    func createProduct(image: UIImage, name: String, description: String,
+                       price: String, completion: @escaping (Bool) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(false)
+            return
+        }
+
+        // Convert the image to a Base64 string
+        let base64Image = imageData.base64EncodedString()
+
+        let parameters: [String: Any] = [
+            "name": name,
+            "description": description,
+            "price": price,
+            "photo": base64Image
+        ]
+
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(String(describing: UserCredentials.loadFromCoreData()?.accessToken))",
+            "Content-type": "application/json"
+        ]
+
+        BackendService.shared.sendRequest(endpoint: "http://127.0.0.1:5001/api/create_product",
+                                          method: .post, parameters: parameters, headers: headers)
+        { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                completion(false)
+            } else if let response = response, (200..<300).contains(response.statusCode) {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+
+
+
 
 }

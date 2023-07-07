@@ -7,6 +7,7 @@ final class BalanceViewController: BaseViewController {
         super.viewDidLoad()
         
         title = "Balance"
+        navigationItem.largeTitleDisplayMode = .never
     }
     
 }

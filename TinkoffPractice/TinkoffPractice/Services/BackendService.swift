@@ -2,10 +2,7 @@ import Foundation
 import Alamofire
 
 protocol BackendServiceProtocol: AnyObject {
-    func sendRequest(
-        endpoint: String,
-        method: HTTPMethod,
-        parameters: Parameters?,
+    func sendRequest(endpoint: String, method: HTTPMethod, parameters: Parameters?, headers: HTTPHeaders?,
         completion: @escaping (_ data: Data?, _ response: HTTPURLResponse?, _ error: Error?) -> Void
     )
 }
@@ -17,7 +14,7 @@ final class BackendService: BackendServiceProtocol {
     private init() {}
 
     func sendRequest(
-        endpoint: String, method: HTTPMethod, parameters: Parameters? = nil,
+        endpoint: String, method: HTTPMethod, parameters: Parameters? = nil, headers: HTTPHeaders? = nil,
         completion: @escaping (_ data: Data?, _ response: HTTPURLResponse?, _ error: Error?) -> Void
     ) {
         guard let url = URL(string: endpoint) else {

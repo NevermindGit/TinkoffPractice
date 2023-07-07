@@ -2,8 +2,10 @@ import UIKit
 
 
 protocol SettingsViewModelProtocol: AnyObject {
-    var settingsOptions: [SettingsOption] { get }
+    func getNumberOfRows() -> Int
+    func getHeightForRows() -> Double
     func didTapExitButton()
+    var onLogOut: ((UIViewController) -> Void)? { get set }
     func handleDarkModeSwitch(isOn: Bool)
     func getTitle(forOptionAt index: Int) -> String
     func getIcon(forOptionAt index: Int, inDarkMode: Bool) -> UIImage?
@@ -14,14 +16,23 @@ protocol SettingsViewModelProtocol: AnyObject {
 
 final class SettingsViewModel: SettingsViewModelProtocol {
     
-    var settingsOptions: [SettingsOption] = [.account, .balance, .darkMode, .aboutApp]
+    private var settingsOptions: [SettingsOption] = [.account, .balance, .darkMode, .aboutApp]
+    var onLogOut: ((UIViewController) -> Void)?
     
     init() {
-        if UserCredentials.loadFromCoreData()?.userRole == "Покупатель" {
+        if DataManager.shared.getUserRole() == "Покупатель" {
             settingsOptions.insert(.ordersHistory, at: 1)
         } else {
             settingsOptions.insert(.myProducts, at: 1)
         }
+    }
+    
+    func getNumberOfRows() -> Int {
+        return settingsOptions.count
+    }
+    
+    func getHeightForRows() -> Double {
+        return 60
     }
 
     func didTapExitButton() {
@@ -30,18 +41,18 @@ final class SettingsViewModel: SettingsViewModelProtocol {
         let navLoginVC = UINavigationController(rootViewController: LoginViewController(dataManager: DataManager.shared))
         navLoginVC.modalPresentationStyle = .fullScreen
         
-        // return navLoginVC for presenting in ViewController
+        if let onLogOut = self.onLogOut {
+            onLogOut(LoginViewController(dataManager: DataManager.shared))
+        }
     }
 
     func handleDarkModeSwitch(isOn: Bool) {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if isOn {
-                // User prefers dark mode
                 windowScene.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .dark
                 }
             } else {
-                // User prefers light mode
                 windowScene.windows.forEach { window in
                     window.overrideUserInterfaceStyle = .light
                 }

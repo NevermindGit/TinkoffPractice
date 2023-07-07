@@ -7,6 +7,7 @@ final class AboutAppViewController: BaseViewController {
         super.viewDidLoad()
         
         title = "About"
+        navigationItem.largeTitleDisplayMode = .never
     }
     
 }

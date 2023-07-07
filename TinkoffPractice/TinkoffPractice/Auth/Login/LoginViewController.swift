@@ -58,6 +58,7 @@ final class LoginViewController: BaseViewController {
         super.viewDidLoad()
         self.title = "Здравствуйте"
         navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
 
         setupUI()
         bindViewModel()

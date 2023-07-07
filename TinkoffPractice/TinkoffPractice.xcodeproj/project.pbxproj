@@ -375,11 +375,11 @@
 			children = (
 				7FB3A02E2A541C1C00F90B1A /* SettingsViewController.swift */,
 				7F9B17C02A575128009E3F76 /* SettingsViewModel.swift */,
-				7F9B17CD2A5760E2009E3F76 /* AboutApp */,
-				7F9B17CC2A5760DA009E3F76 /* Balance */,
+				7F9B17BF2A575114009E3F76 /* Account */,
 				7F9B17CB2A5760C2009E3F76 /* MyProducts */,
 				7F9B17C42A5752A2009E3F76 /* OrdersHistory */,
-				7F9B17BF2A575114009E3F76 /* Account */,
+				7F9B17CC2A5760DA009E3F76 /* Balance */,
+				7F9B17CD2A5760E2009E3F76 /* AboutApp */,
 			);
 			path = Settings;
 			sourceTree = "<group>";

@@ -26,7 +26,7 @@ final class SettingsViewController: BaseViewController {
     
     private lazy var darkModeSwitch: UISwitch = {
         let switchControl = UISwitch()
-        switchControl.onTintColor = .systemBlue
+        switchControl.onTintColor = .systemYellow
         switchControl.addTarget(self, action: #selector(handleDarkModeSwitch), for: .valueChanged)
         return switchControl
     }()
@@ -49,8 +49,7 @@ final class SettingsViewController: BaseViewController {
     @objc
     private func handleDarkModeSwitch(_ sender: UISwitch) {
         viewModel.handleDarkModeSwitch(isOn: sender.isOn)
-        // reload table view to update the icon colors
-        tableView.reloadData()
+        tableView.reloadData() // reload tableview to update icons colors
     }
 
     private func configureUI() {
@@ -61,6 +60,15 @@ final class SettingsViewController: BaseViewController {
         view.addSubview(exitButton)
 
         setupConstraints()
+        
+        viewModel.onLogOut = { [weak self] viewController in
+            guard let self = self else { return }
+            
+            let navLoginVC = UINavigationController(rootViewController: viewController)
+            navLoginVC.modalPresentationStyle = .fullScreen
+            self.present(navLoginVC, animated: true)
+        }
+        
     }
     
     private func setupConstraints() {
@@ -92,7 +100,7 @@ extension SettingsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        viewModel.getHeightForRows()
     }
 }
 
@@ -100,7 +108,7 @@ extension SettingsViewController: UITableViewDelegate {
 
 extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.settingsOptions.count
+        return viewModel.getNumberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

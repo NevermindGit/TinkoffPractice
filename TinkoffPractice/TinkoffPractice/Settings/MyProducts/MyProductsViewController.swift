@@ -7,6 +7,7 @@ final class MyProductsViewController: BaseViewController {
         super.viewDidLoad()
         
         title = "My Products"
+        navigationItem.largeTitleDisplayMode = .never
     }
     
 }

@@ -7,6 +7,7 @@ final class OrdersHistoryViewController: BaseViewController {
         super.viewDidLoad()
         
         title = "History"
+        navigationItem.largeTitleDisplayMode = .never
     }
     
 }
