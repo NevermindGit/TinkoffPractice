@@ -88,9 +88,9 @@ final class RegistrationViewController: BaseViewController {
 
         loginTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.height.equalTo(36)
         }
 
         userInfoTextField.snp.makeConstraints { make in
@@ -114,7 +114,6 @@ final class RegistrationViewController: BaseViewController {
             make.height.equalTo(loginTextField)
         }
 
-
         userRoleSegmentedControl.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(confirmPasswordTextField.snp.bottom).offset(20)
@@ -128,5 +127,4 @@ final class RegistrationViewController: BaseViewController {
             make.height.equalTo(56)
         }
     }
-
 }

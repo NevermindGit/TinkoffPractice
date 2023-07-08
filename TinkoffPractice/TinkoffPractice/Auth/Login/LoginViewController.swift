@@ -126,9 +126,9 @@ final class LoginViewController: BaseViewController {
 
         loginTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(130)
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.height.equalTo(36)
         }
 
         passwordTextField.snp.makeConstraints { make in

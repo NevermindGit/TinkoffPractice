@@ -61,10 +61,11 @@ final class CartViewController: BaseViewController {
 
     private func setupConstraints() {
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(createOrderButton.snp.top).offset(-16)
+            make.edges.equalToSuperview()
+//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//            make.left.equalTo(view.snp.left)
+//            make.right.equalTo(view.snp.right)
+//            make.bottom.equalTo(createOrderButton.snp.top).offset(-16)
         }
 
         createOrderButton.snp.makeConstraints { make in

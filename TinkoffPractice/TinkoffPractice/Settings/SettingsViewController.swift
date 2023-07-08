@@ -73,10 +73,11 @@ final class SettingsViewController: BaseViewController {
     
     private func setupConstraints() {
         tableView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.edges.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.centerY.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.height.equalToSuperview().multipliedBy(0.5)
         }
 
         exitButton.snp.makeConstraints { make in

@@ -15,45 +15,21 @@ final class OrderConfirmViewController: BaseViewController {
         return tableView
     }()
 
-    private let userIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
-        return imageView
-    }()
-
-    private let userNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "User Name"
-        return label
-    }()
-
-    private let userPhoneLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "User Phone"
-        return label
-    }()
-
     private let deliveryAddressTextField: BaseTextField = {
         let textField = BaseTextField()
         textField.placeholder = "Enter delivery address"
         return textField
     }()
 
-    private let deliveryFeeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "Доставка: 100"
-        return label
-    }()
-
-    private let totalSumLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "Итого: "
-        return label
-    }()
+    
+    private let deliveryTitleLabel: UILabel = makeLabel(text: "Доставка", size: 20, color: .label)
+    private let totalPriceLabel: UILabel = makeLabel(text: "Сумма к оплате", size: 20, color: .label)
+    private let deliveryPriceTitleLabel: UILabel = makeLabel(text: "Доставка", size: 16, color: .systemGray)
+    private let deliveryPriceValueLabel: UILabel = makeLabel(text: "100 ₿", size: 16, color: .systemGray, alignment: .right)
+    private let productsTitleLabel: UILabel = makeLabel(text: "Товары", size: 16, color: .systemGray)
+    private let productsTotalPriceLabel: UILabel = makeLabel(text: "500 ₿", size: 16, color: .systemGray, alignment: .right)
+    private let totalSumTitleLabel: UILabel = makeLabel(text: "Итого", size: 18, color: .label)
+    private let totalSumValueLabel: UILabel = makeLabel(text: "600 ₿", size: 18, color: .label, alignment: .right)
 
     private lazy var paymentButton: BaseButton = {
         let button = BaseButton()
@@ -67,63 +43,110 @@ final class OrderConfirmViewController: BaseViewController {
         super.viewDidLoad()
         navigationItem.title = "Подтверждение заказа"
         navigationItem.largeTitleDisplayMode = .never
-        setupUI()
         bindViewModel()
+        setupUI()
     }
 
     // MARK: - Private Methods
 
     private func setupUI() {
         view.addSubview(tableView)
-        view.addSubview(userIcon)
-        view.addSubview(userNameLabel)
-        view.addSubview(userPhoneLabel)
-        view.addSubview(deliveryAddressTextField)
-        view.addSubview(deliveryFeeLabel)
-        view.addSubview(totalSumLabel)
-        view.addSubview(paymentButton)
+        setupTableFooterView()
         setupConstraints()
     }
+    
+    private static func makeLabel(text: String, size: CGFloat, color: UIColor, alignment: NSTextAlignment = .left) -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: size, weight: .semibold)
+        label.textColor = color
+        label.text = text
+        label.textAlignment = alignment
+        return label
+    }
+
+    private func setupTableFooterView() {
+        let footerView = UIView()
+        
+        footerView.addSubview(deliveryTitleLabel)
+        footerView.addSubview(totalPriceLabel)
+        footerView.addSubview(deliveryAddressTextField)
+        footerView.addSubview(deliveryPriceTitleLabel)
+        footerView.addSubview(deliveryPriceValueLabel)
+        footerView.addSubview(productsTitleLabel)
+        footerView.addSubview(productsTotalPriceLabel)
+        footerView.addSubview(totalSumTitleLabel)
+        footerView.addSubview(totalSumValueLabel)
+        footerView.addSubview(paymentButton)
+
+        // Increase the height of the footerView
+        footerView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 400)
+
+        tableView.tableFooterView = footerView
+    }
+
 
     private func setupConstraints() {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        userIcon.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(16)
-            make.leading.equalToSuperview().offset(16)
-        }
+        setupFooterConstraints()
+    }
 
-        userNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(userIcon.snp.top)
-            make.leading.equalTo(userIcon.snp.trailing).offset(16)
-        }
-
-        userPhoneLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel.snp.bottom).offset(4)
-            make.leading.equalTo(userIcon.snp.trailing).offset(16)
+    private func setupFooterConstraints() {
+        guard let footerView = tableView.tableFooterView else { return }
+        
+        deliveryTitleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(32)
+            make.leading.equalTo(footerView).offset(16)
         }
 
         deliveryAddressTextField.snp.makeConstraints { make in
-            make.top.equalTo(userIcon.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(deliveryTitleLabel.snp.bottom).offset(16)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(36)
+        }
+        
+        totalPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(deliveryAddressTextField.snp.bottom).offset(32)
+            make.leading.equalTo(footerView).offset(16)
+        }
+        
+        productsTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(totalPriceLabel.snp.bottom).offset(16)
+            make.leading.equalTo(footerView).offset(16)
         }
 
-        deliveryFeeLabel.snp.makeConstraints { make in
-            make.top.equalTo(deliveryAddressTextField.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+        productsTotalPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(productsTitleLabel)
+            make.trailing.equalTo(footerView).inset(16)
         }
 
-        totalSumLabel.snp.makeConstraints { make in
-            make.top.equalTo(deliveryFeeLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+        deliveryPriceTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(productsTitleLabel.snp.bottom).offset(16)
+            make.leading.equalTo(footerView).offset(16)
+        }
+
+        deliveryPriceValueLabel.snp.makeConstraints { make in
+            make.top.equalTo(deliveryPriceTitleLabel)
+            make.trailing.equalTo(footerView).inset(16)
+        }
+
+        totalSumTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(deliveryPriceTitleLabel.snp.bottom).offset(16)
+            make.leading.equalTo(footerView).offset(16)
+        }
+
+        totalSumValueLabel.snp.makeConstraints { make in
+            make.top.equalTo(totalSumTitleLabel)
+            make.trailing.equalTo(footerView).inset(16)
         }
 
         paymentButton.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
-            make.width.equalTo(view.snp.width).multipliedBy(0.9)
+            make.centerX.equalTo(footerView.snp.centerX)
+            make.bottom.equalTo(footerView.snp.bottom).inset(16)
+            make.width.equalTo(footerView.snp.width).multipliedBy(0.9)
             make.height.equalTo(56)
         }
     }
@@ -154,8 +177,7 @@ extension OrderConfirmViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: "OrderItemCell",
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "OrderItemCell",
             for: indexPath
         ) as? OrderItemCell else {
             assertionFailure("Failed to dequeue OrderItemCell")
