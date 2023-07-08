@@ -1,34 +1,36 @@
 import Foundation
 
 protocol CartViewModelProtocol: AnyObject {
-    var numberOfItems: Int { get }
-    var itemAdded: (() -> Void)? { get set }
+    var productAdded: (() -> Void)? { get set }
+    var numberOfProducts: Int { get }
+    func product(at index: Int) -> CartProduct
 
-    func item(at index: Int) -> Item
-    func removeItem(at index: Int)
+    func removeProduct(at index: Int)
 }
 
 final class CartViewModel: CartViewModelProtocol {
-    var itemAdded: (() -> Void)?
+    var productAdded: (() -> Void)?
 
-    var numberOfItems: Int {
-        CartManager.shared.getItems().count
+    var numberOfProducts: Int {
+        CartManager.shared.getProduct().count
     }
 
-    func item(at index: Int) -> Item {
-        CartManager.shared.getItems()[index]
+    func product(at index: Int) -> CartProduct {
+        CartManager.shared.getProduct()[index]
     }
 
-    func removeItem(at index: Int) {
-        CartManager.shared.removeItem(at: index)
-        itemAdded?()
+    func removeProduct(at index: Int) {
+        CartManager.shared.removeProduct(at: index)
+        productAdded?()
     }
 
     init() {
-        CartManager.shared.itemAdded = { [weak self] _ in
+        CartManager.shared.productAdded = { [weak self] _ in
             DispatchQueue.main.async {
-                self?.itemAdded?()
+                self?.productAdded?()
             }
         }
     }
 }
+
+

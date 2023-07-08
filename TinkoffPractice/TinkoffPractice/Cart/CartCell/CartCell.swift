@@ -84,10 +84,10 @@ final class CartCell: UITableViewCell {
         }
     }
 
-    func configure(with item: Item) {
-        itemInCartImageView.image = item.image
-        titleLabel.text = item.name
-        priceLabel.text = "\(item.price) ₿"
+    func configure(with product: CartProduct) {
+        itemInCartImageView.image = product.product.image
+        titleLabel.text = product.product.name
+        priceLabel.text = "\(product.product.price) ₿"
     }
 
     @objc func decreaseQuantity() {

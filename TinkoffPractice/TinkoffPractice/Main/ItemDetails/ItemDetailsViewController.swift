@@ -39,15 +39,15 @@ final class ItemDetailsViewController: BaseViewController {
         return imageView
     }()
 
-    var viewModel: ItemDetailsViewModelProtocol! {
+    var viewModel: ProductDetailsViewModelProtocol! {
         didSet {
-            viewModel.itemDidChange = { [weak self] in
+            viewModel.productDidChange = { [weak self] in
                 self?.updateNewsLabels()
             }
         }
     }
 
-    init(viewModel: ItemDetailsViewModelProtocol) {
+    init(viewModel: ProductDetailsViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
     }
@@ -61,7 +61,7 @@ final class ItemDetailsViewController: BaseViewController {
         setupUI()
         updateNewsLabels()
 
-        viewModel.itemDidChange = { [weak self] in
+        viewModel.productDidChange = { [weak self] in
             self?.updateNewsLabels()
         }
     }
@@ -110,10 +110,10 @@ final class ItemDetailsViewController: BaseViewController {
     }
 
     private func updateNewsLabels() {
-        itemTitleLabel.text = viewModel.itemName
-        itemDescriptionLabel.text = viewModel.itemDescription
-        itemImageView.image = viewModel.itemImage
-        itemPriceLabel.text = "\(viewModel.itemPrice) ₿"
+        itemTitleLabel.text = viewModel.productName
+        itemDescriptionLabel.text = viewModel.productDescription
+        itemImageView.image = viewModel.productImage
+        itemPriceLabel.text = "\(viewModel.productPrice) ₿"
         itemImageView.setNeedsLayout()
         itemImageView.layoutIfNeeded()
     }

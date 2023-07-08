@@ -5,10 +5,10 @@ import Alamofire
 protocol DataManagerProtocol: AnyObject {
     func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String)
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void)
-    func fetchAllItems(completion: @escaping (([Item]) -> Void))
+    func fetchAllItems(completion: @escaping (([Product]) -> Void))
     func fetchItemsWithFilter(
         minPrice: Double, maxPrice: Double, сategories: [String],
-        completion: @escaping (([Item]) -> Void)
+        completion: @escaping (([Product]) -> Void)
     )
 }
 
@@ -47,41 +47,41 @@ final class DataManager: DataManagerProtocol {
     }
 
 
-    func fetchAllItems(completion: @escaping (([Item]) -> Void)) {
-        let item1 = Item(
+    func fetchAllItems(completion: @escaping (([Product]) -> Void)) {
+        let item1 = Product(
             id: 1, name: "Product 1", price: 10.0,
             image: UIImage(named: "vans") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item2 = Item(
+        let item2 = Product(
             id: 2, name: "New Item", price: 20.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item3 = Item(
+        let item3 = Product(
             id: 3, name: "Blazer", price: 100.0,
             image: UIImage(named: "blazer") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item4 = Item(
+        let item4 = Product(
             id: 4, name: "Product 4", price: 250.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item5 = Item(
+        let item5 = Product(
             id: 5, name: "Vans", price: 20.0,
             image: UIImage(named: "vans") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item6 = Item(
+        let item6 = Product(
             id: 6, name: "Product 3", price: 100.0,
             image: UIImage(named: "blazer") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
-        let item7 = Item(
+        let item7 = Product(
             id: 7, name: "Product 4", price: 250.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
         )
         print("Fetch items from DB")
         completion([item1, item2, item3, item4, item5, item6, item7])
@@ -89,7 +89,7 @@ final class DataManager: DataManagerProtocol {
 
     func fetchItemsWithFilter(
         minPrice: Double, maxPrice: Double, сategories: [String],
-        completion: @escaping (([Item]) -> Void)
+        completion: @escaping (([Product]) -> Void)
     ) {
 
     }

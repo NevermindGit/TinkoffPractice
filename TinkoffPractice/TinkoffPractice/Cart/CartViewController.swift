@@ -37,14 +37,14 @@ final class CartViewController: BaseViewController {
     private func bindViewModel() {
         viewModel = CartViewModel()
 
-        viewModel.itemAdded = { [weak self] in
+        viewModel.productAdded = { [weak self] in
             self?.tableView.reloadData()
             self?.updateOrderButtonState()
         }
     }
 
     private func updateOrderButtonState() {
-        let itemCount = viewModel.numberOfItems
+        let itemCount = viewModel.numberOfProducts
         createOrderButton.isEnabled = itemCount > 0
         createOrderButton.backgroundColor = itemCount > 0 ? UIColor.systemYellow : UIColor.systemGray4
     }
@@ -88,15 +88,14 @@ extension CartViewController: UITableViewDelegate {
 }
 
 // MARK: - UITableViewDataSource
-
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfItems
+        return viewModel.numberOfProducts
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell", for: indexPath) as? CartCell
-        let item = viewModel.item(at: indexPath.row)
+        let item = viewModel.product(at: indexPath.row)
         cell?.configure(with: item)
         return cell!
     }
@@ -107,7 +106,7 @@ extension CartViewController: UITableViewDataSource {
         if editingStyle == .delete {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
-            viewModel.removeItem(at: indexPath.row)
+            viewModel.removeProduct(at: indexPath.row)
             tableView.endUpdates()
             updateOrderButtonState()
         }

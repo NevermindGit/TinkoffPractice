@@ -64,9 +64,9 @@ final class OrderItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with item: Item) {
-        itemInCartImageView.image = item.image
-        titleLabel.text = item.name
-        priceLabel.text = String(format: "%.2f", item.price)
+    func configure(with item: CartProduct) {
+        itemInCartImageView.image = item.product.image
+        titleLabel.text = item.product.name
+        priceLabel.text = String(format: "%.2f", item.product.price)
     }
 }

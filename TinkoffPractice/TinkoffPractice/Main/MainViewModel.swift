@@ -1,10 +1,10 @@
 import Foundation
 
 protocol MainViewModelProtocol: AnyObject {
-    func fetchProductsFromServer(completion: @escaping (Result<[Item], Error>) -> Void)
+    func fetchProductsFromServer(completion: @escaping (Result<[Product], Error>) -> Void)
     func numberOfRows() -> Int
     func getProductsCellViewModel(at indexPath: IndexPath) -> ItemCellViewModelProtocol
-    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ItemDetailsViewModelProtocol
+    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ProductDetailsViewModelProtocol
     func filterItems(with searchText: String, completion: @escaping () -> Void)
 }
 
@@ -12,9 +12,9 @@ final class MainViewModel: MainViewModelProtocol {
 
     private let dataManager: DataManagerProtocol
 
-    private var items: [Item] = []
+    private var items: [Product] = []
 
-    private var searchedItems: [Item]?
+    private var searchedItems: [Product]?
 
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
@@ -29,7 +29,7 @@ final class MainViewModel: MainViewModelProtocol {
         completion()
     }
 
-    func fetchProductsFromServer(completion: @escaping (Result<[Item], Error>) -> Void) {
+    func fetchProductsFromServer(completion: @escaping (Result<[Product], Error>) -> Void) {
         dataManager.fetchAllItems { [weak self] items in
             guard let self = self else { return }
             if !items.isEmpty {
@@ -52,11 +52,11 @@ final class MainViewModel: MainViewModelProtocol {
         ItemCellViewModel(item: getItem(at: indexPath))
     }
 
-    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ItemDetailsViewModelProtocol {
-        ItemDetailsViewModel(item: getItem(at: indexPath))
+    func getProductsDetailsViewModel(at indexPath: IndexPath) -> ProductDetailsViewModelProtocol {
+        ProductDetailsViewModel(product: getItem(at: indexPath))
     }
 
-    private func getItem(at indexPath: IndexPath) -> Item {
+    private func getItem(at indexPath: IndexPath) -> Product {
         if let searchedItems = searchedItems {
             return searchedItems[indexPath.row]
         } else {

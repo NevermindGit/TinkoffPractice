@@ -21,7 +21,7 @@ final class OrderConfirmViewController: BaseViewController {
         return textField
     }()
 
-    
+
     private let deliveryTitleLabel: UILabel = makeLabel(text: "Доставка", size: 20, color: .label)
     private let totalPriceLabel: UILabel = makeLabel(text: "Сумма к оплате", size: 20, color: .label)
     private let deliveryPriceTitleLabel: UILabel = makeLabel(text: "Доставка", size: 16, color: .systemGray)
@@ -54,7 +54,7 @@ final class OrderConfirmViewController: BaseViewController {
         setupTableFooterView()
         setupConstraints()
     }
-    
+
     private static func makeLabel(text: String, size: CGFloat, color: UIColor, alignment: NSTextAlignment = .left) -> UILabel {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: size, weight: .semibold)
@@ -66,7 +66,7 @@ final class OrderConfirmViewController: BaseViewController {
 
     private func setupTableFooterView() {
         let footerView = UIView()
-        
+
         footerView.addSubview(deliveryTitleLabel)
         footerView.addSubview(totalPriceLabel)
         footerView.addSubview(deliveryAddressTextField)
@@ -95,7 +95,7 @@ final class OrderConfirmViewController: BaseViewController {
 
     private func setupFooterConstraints() {
         guard let footerView = tableView.tableFooterView else { return }
-        
+
         deliveryTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(32)
             make.leading.equalTo(footerView).offset(16)
@@ -107,12 +107,12 @@ final class OrderConfirmViewController: BaseViewController {
             make.width.equalToSuperview().multipliedBy(0.9)
             make.height.equalTo(36)
         }
-        
+
         totalPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(deliveryAddressTextField.snp.bottom).offset(32)
             make.leading.equalTo(footerView).offset(16)
         }
-        
+
         productsTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(totalPriceLabel.snp.bottom).offset(16)
             make.leading.equalTo(footerView).offset(16)

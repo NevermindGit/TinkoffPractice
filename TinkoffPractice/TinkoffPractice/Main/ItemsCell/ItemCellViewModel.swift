@@ -4,7 +4,7 @@ protocol ItemCellViewModelProtocol: AnyObject {
     var itemName: String { get }
     var itemPrice: Double { get }
     var itemImage: UIImage { get }
-    init(item: Item)
+    init(item: Product)
 }
 
 final class ItemCellViewModel: ItemCellViewModelProtocol {
@@ -21,9 +21,9 @@ final class ItemCellViewModel: ItemCellViewModelProtocol {
         item.image
     }
 
-    private let item: Item
+    private let item: Product
 
-    init(item: Item) {
+    init(item: Product) {
         self.item = item
     }
 }
