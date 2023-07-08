@@ -1,6 +1,8 @@
 import UIKit
 
 final class CartCell: UITableViewCell {
+    
+    var product: CartProduct?
 
     private let itemInCartImageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,6 +50,19 @@ final class CartCell: UITableViewCell {
         contentView.addSubview(minusButton)
         contentView.addSubview(plusButton)
     }
+    
+    var viewModel: CartCellViewModelProtocol? {
+        didSet {
+            titleLabel.text = viewModel?.product.product.name
+            priceLabel.text = "\(viewModel?.product.product.price ?? 0.0) ₿"
+            quantityLabel.text = "\(viewModel?.product.quantity ?? 1)"
+            viewModel?.quantityDidChange = { [weak self] quantity in
+                DispatchQueue.main.async {
+                    self?.quantityLabel.text = "\(quantity)"
+                }
+            }
+        }
+    }
 
     func setupConstraints() {
         itemInCartImageView.snp.makeConstraints { make in
@@ -85,20 +100,24 @@ final class CartCell: UITableViewCell {
     }
 
     func configure(with product: CartProduct) {
+        self.product = product
         itemInCartImageView.image = product.product.image
         titleLabel.text = product.product.name
         priceLabel.text = "\(product.product.price) ₿"
+        quantityLabel.text = "\(product.quantity)"
     }
 
+
     @objc func decreaseQuantity() {
-        if quantity > 1 {
-            quantity -= 1
-            quantityLabel.text = "\(quantity)"
+        if product?.quantity ?? 0 > 1 {
+            product?.quantity -= 1
+            quantityLabel.text = "\(product?.quantity ?? 0)"
         }
     }
 
     @objc func increaseQuantity() {
-        quantity += 1
-        quantityLabel.text = "\(quantity)"
+        product?.quantity += 1
+        quantityLabel.text = "\(product?.quantity ?? 0)"
     }
+
 }

@@ -1,20 +1,27 @@
-//protocol CartCellViewModelProtocol {
-//    var product: CartProduct { get }
-//    var quantityChanged: ((Int) -> Void)? { get set }
-//
-//    func updateQuantity(_ quantity: Int)
-//}
-//
-//final class CartCellViewModel: CartCellViewModelProtocol {
-//    var product: CartProduct
-//    var quantityChanged: ((Int) -> Void)?
-//
-//    init(product: CartProduct) {
-//        self.product = product
-//    }
-//
-//    func updateQuantity(_ quantity: Int) {
-//        product.quantity = quantity
-//        quantityChanged?(quantity)
-//    }
-//}
+protocol CartCellViewModelProtocol {
+    var product: CartProduct { get }
+    var quantityDidChange: ((Int) -> Void)? { get set }
+    func increaseQuantity()
+    func decreaseQuantity()
+}
+
+class CartCellViewModel: CartCellViewModelProtocol {
+    var product: CartProduct
+    var quantityDidChange: ((Int) -> Void)?
+
+    init(product: CartProduct) {
+        self.product = product
+    }
+
+    func increaseQuantity() {
+        product.quantity += 1
+        quantityDidChange?(product.quantity)
+    }
+
+    func decreaseQuantity() {
+        if product.quantity > 1 {
+            product.quantity -= 1
+            quantityDidChange?(product.quantity)
+        }
+    }
+}
