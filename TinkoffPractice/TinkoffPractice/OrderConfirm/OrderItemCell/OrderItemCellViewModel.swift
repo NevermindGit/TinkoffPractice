@@ -9,25 +9,25 @@ protocol OrderItemViewModelProtocol {
 
 
 final class OrderItemViewModel: OrderItemViewModelProtocol {
-    private let cartProduct: CartProduct
+    private let product: Product
 
-    init(cartProduct: CartProduct) {
-        self.cartProduct = cartProduct
+    init(product: Product) {
+        self.product = product
     }
 
     var productImage: UIImage? {
-        return cartProduct.product.image
+        return product.image
     }
 
     var productName: String {
-        return cartProduct.product.name
+        return product.name
     }
 
     var productPrice: Double {
-        return cartProduct.product.price
+        return product.price
     }
 
     var productQuantity: Int {
-        return cartProduct.quantity
+        return product.quantity
     }
 }

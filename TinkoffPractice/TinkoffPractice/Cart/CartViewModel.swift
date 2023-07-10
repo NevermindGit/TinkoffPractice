@@ -3,7 +3,7 @@ import Foundation
 protocol CartViewModelProtocol: AnyObject {
     var productAdded: (() -> Void)? { get set }
     var numberOfProducts: Int { get }
-    func product(at index: Int) -> CartProduct
+    func product(at index: Int) -> Product
 
     func removeProduct(at index: Int)
 }
@@ -15,7 +15,7 @@ final class CartViewModel: CartViewModelProtocol {
         CartManager.shared.getProduct().count
     }
 
-    func product(at index: Int) -> CartProduct {
+    func product(at index: Int) -> Product {
         CartManager.shared.getProduct()[index]
     }
 

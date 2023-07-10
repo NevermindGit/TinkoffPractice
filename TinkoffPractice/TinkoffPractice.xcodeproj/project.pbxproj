@@ -37,7 +37,6 @@
 		7F9B17D12A576119009E3F76 /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17D02A576119009E3F76 /* BalanceViewController.swift */; };
 		7F9B17D32A576147009E3F76 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17D22A576147009E3F76 /* AboutAppViewController.swift */; };
 		7F9B17D52A596BE4009E3F76 /* OrderItemCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17D42A596BE4009E3F76 /* OrderItemCellViewModel.swift */; };
-		7F9B17D72A5974B8009E3F76 /* CartProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17D62A5974B8009E3F76 /* CartProduct.swift */; };
 		7F9B17D92A597FAF009E3F76 /* CartCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17D82A597FAF009E3F76 /* CartCellViewModel.swift */; };
 		7FB39FD52A53527C00F90B1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39FD42A53527C00F90B1A /* Assets.xcassets */; };
 		7FB39FD82A53527C00F90B1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FB39FD62A53527C00F90B1A /* LaunchScreen.storyboard */; };
@@ -107,7 +106,6 @@
 		7F9B17D02A576119009E3F76 /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		7F9B17D22A576147009E3F76 /* AboutAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		7F9B17D42A596BE4009E3F76 /* OrderItemCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemCellViewModel.swift; sourceTree = "<group>"; };
-		7F9B17D62A5974B8009E3F76 /* CartProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProduct.swift; sourceTree = "<group>"; };
 		7F9B17D82A597FAF009E3F76 /* CartCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCellViewModel.swift; sourceTree = "<group>"; };
 		7FB39FC52A53527B00F90B1A /* TinkoffPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FB39FD42A53527C00F90B1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -439,7 +437,6 @@
 			children = (
 				7FB3A0152A53535600F90B1A /* Product.swift */,
 				7F9B17B02A56DF9B009E3F76 /* User.swift */,
-				7F9B17D62A5974B8009E3F76 /* CartProduct.swift */,
 				7F6C6FAE2A5C281000EE0239 /* Seller.swift */,
 			);
 			path = Models;
@@ -620,7 +617,6 @@
 				7FB3A0272A53535600F90B1A /* RegistrationViewModel.swift in Sources */,
 				7FB39FE82A5352FA00F90B1A /* SceneDelegate.swift in Sources */,
 				7FB3A0242A53535600F90B1A /* BaseButton.swift in Sources */,
-				7F9B17D72A5974B8009E3F76 /* CartProduct.swift in Sources */,
 				7FB3A0282A53535600F90B1A /* RegistrationViewController.swift in Sources */,
 				7F2AFCF92A5994F000DA388F /* OrderStatusViewController.swift in Sources */,
 				7FB3A0002A53532200F90B1A /* LoginViewModel.swift in Sources */,

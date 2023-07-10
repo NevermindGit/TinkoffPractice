@@ -6,28 +6,28 @@ protocol MyOrdersCellViewModelProtocol: AnyObject {
     var itemPrice: String { get }
     var itemQuantity: String { get }
     
-    init(product: CartProduct)
+    init(product: Product)
     
 }
 
 final class MyOrdersCellViewModel: MyOrdersCellViewModelProtocol {
     
-    private let product: CartProduct
+    private let product: Product
     
-    required init(product: CartProduct) {
+    required init(product: Product) {
         self.product = product
     }
     
     var itemName: String {
-        product.product.name
+        product.name
     }
     
     var itemImage: UIImage {
-        product.product.image
+        product.image
     }
     
     var itemPrice: String {
-        String(product.product.price)
+        String(product.price)
     }
     
     var itemQuantity: String {

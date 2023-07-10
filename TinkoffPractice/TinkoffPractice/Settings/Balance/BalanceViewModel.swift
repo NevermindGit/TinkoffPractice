@@ -1,5 +1,5 @@
 protocol BalanceViewModelProtocol: AnyObject {
-    func getBalance(completion: @escaping ((Double) -> Void))
+    func getBalance(completion: @escaping ((Double?) -> Void))
     func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void))
 }
 
@@ -11,8 +11,10 @@ class BalanceViewModel: BalanceViewModelProtocol {
         self.dataManager = dataManager
     }
 
-    func getBalance(completion: @escaping ((Double) -> Void)) {
-        dataManager.getBalance(completion: completion)
+    func getBalance(completion: @escaping ((Double?) -> Void)) {
+        dataManager.getBalance { balance in
+            completion(balance)
+        }
     }
 
     func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void)) {

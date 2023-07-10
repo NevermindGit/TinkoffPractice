@@ -28,7 +28,7 @@ final class BalanceViewController: BaseViewController {
     private let balanceValueLabel: UILabel = {
         let label = UILabel()
         label.text = "0 ₿"
-        label.font = UIFont.systemFont(ofSize: 26, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         return label
     }()
     
@@ -36,6 +36,7 @@ final class BalanceViewController: BaseViewController {
         super.viewDidLoad()
         viewModel = BalanceViewModel()
         setupUI()
+        getUpdatedBalance()
     }
     
     @objc
@@ -54,7 +55,7 @@ final class BalanceViewController: BaseViewController {
     private func getUpdatedBalance() {
         viewModel.getBalance { [weak self] balance in
             DispatchQueue.main.async {
-                self?.balanceValueLabel.text = "\(balance) ₿"
+                self?.balanceValueLabel.text = "\(balance ?? 1.0) ₿"
             }
         }
     }

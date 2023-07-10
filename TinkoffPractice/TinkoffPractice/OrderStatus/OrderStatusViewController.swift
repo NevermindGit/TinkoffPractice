@@ -93,9 +93,9 @@ final class OrderStatusViewController: BaseViewController {
     
     private func setupProductDetails() {
         orderCancelledStausLabel.isHidden = true
-        productImageView.image = viewModel.product.product.image
-        productName.text = viewModel.product.product.name
-        productPrice.text = String(viewModel.product.product.price)
+        productImageView.image = viewModel.product.image
+        productName.text = viewModel.product.name
+        productPrice.text = String(viewModel.product.price)
         productQuantity.text = "x\(viewModel.product.quantity)"
     }
     

@@ -2,7 +2,7 @@ import Foundation
 
 protocol OrderConfirmViewModelProtocol {
     var numberOfItems: Int { get }
-    func item(at index: Int) -> CartProduct
+    func item(at index: Int) -> Product
     func totalSum() -> Double
 }
 
@@ -12,11 +12,11 @@ final class OrderConfirmViewModel: OrderConfirmViewModelProtocol {
         CartManager.shared.getProduct().count
     }
 
-    func item(at index: Int) -> CartProduct {
+    func item(at index: Int) -> Product {
         CartManager.shared.getProduct()[index]
     }
     
     func totalSum() -> Double {
-        return CartManager.shared.getProduct().reduce(0) { $0 + $1.product.price * Double($1.quantity) }
+        return CartManager.shared.getProduct().reduce(0) { $0 + $1.price * Double($1.quantity) }
     }
 }

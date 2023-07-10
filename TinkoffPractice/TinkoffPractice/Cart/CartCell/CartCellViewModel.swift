@@ -1,15 +1,15 @@
 protocol CartCellViewModelProtocol {
-    var product: CartProduct { get }
+    var product: Product { get }
     var quantityDidChange: ((Int) -> Void)? { get set }
     func increaseQuantity()
     func decreaseQuantity()
 }
 
 class CartCellViewModel: CartCellViewModelProtocol {
-    var product: CartProduct
+    var product: Product
     var quantityDidChange: ((Int) -> Void)?
 
-    init(product: CartProduct) {
+    init(product: Product) {
         self.product = product
     }
 

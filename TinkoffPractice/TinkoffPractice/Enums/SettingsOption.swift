@@ -25,7 +25,7 @@ enum SettingsOption: Int, CaseIterable {
         case .account: return UIImage(systemName: "person")
         case .myProducts: return UIImage(systemName: "list.clipboard")
         case .ordersHistory: return UIImage(systemName: "list.clipboard")
-        case .balance: return UIImage(systemName: "rublesign")
+        case .balance: return UIImage(systemName: "bitcoinsign")
         case .darkMode: return UIImage(systemName: "ellipsis.circle")
         case .aboutApp: return UIImage(systemName: "newspaper")
         }

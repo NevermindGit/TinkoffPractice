@@ -196,7 +196,7 @@ extension OrderConfirmViewController: UITableViewDataSource {
         }
 
         let item = viewModel.item(at: indexPath.row)
-        let itemViewModel = OrderItemViewModel(cartProduct: item)
+        let itemViewModel = OrderItemViewModel(product: item)
         cell.configure(with: itemViewModel)
         return cell
     }

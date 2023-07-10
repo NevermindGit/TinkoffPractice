@@ -7,9 +7,9 @@ protocol DataManagerProtocol: AnyObject {
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void)
     func fetchAllItems(completion: @escaping (([Product]) -> Void))
     func fetchItemsWithFilter(minPrice: Double, maxPrice: Double, сategories: [String], sellersId: [Int], completion: @escaping (([Product]) -> Void))
-    func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void))
-    func getBalance(completion: @escaping ((Double) -> Void))
-    func fetchBuyersOrders(completion: @escaping ([CartProduct]) -> Void)
+    func topUpBalance(amount: String, completion: @escaping (Bool) -> Void)
+    func getBalance(completion: @escaping (Double?) -> Void)
+    func fetchBuyersOrders(completion: @escaping ([Product]) -> Void)
 }
 
 final class DataManager: DataManagerProtocol {
@@ -17,13 +17,20 @@ final class DataManager: DataManagerProtocol {
     private init() {}
     
     private let host = "http://127.0.0.1:5001"
+    
+//    private let token: String = UserCredentials.loadFromCoreData()?.accessToken ?? ""
+//
+//    private let headers: HTTPHeaders = [
+//        "Authorization": "Bearer \(self.token)",
+//        "Accept": "application/json"
+//    ]
 
     func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void)) {
         print("User \(login) with role \(userRole) was added to DB")
         
         let parameters: Parameters = ["login": login, "username": userInfo, "role": userRole, "password": password]
         
-        BackendService.shared.sendRequest(endpoint: "\(host)/signUp", method: .post, parameters: parameters) { data, response, error in
+        BackendService.shared.sendRequest(endpoint: "\(host)/api/create_user", method: .post, parameters: parameters) { data, response, error in
             if let error = error {
                 print("Произошла ошибка: \(error)")
             } else if let response = response {
@@ -74,37 +81,37 @@ final class DataManager: DataManagerProtocol {
         let item1 = Product(
             id: 1, name: "Product 1", price: 10.0,
             image: UIImage(named: "vans") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item2 = Product(
             id: 2, name: "New Item", price: 20.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item3 = Product(
             id: 3, name: "Blazer", price: 100.0,
             image: UIImage(named: "blazer") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item4 = Product(
             id: 4, name: "Product 4", price: 250.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item5 = Product(
             id: 5, name: "Vans", price: 20.0,
             image: UIImage(named: "vans") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item6 = Product(
             id: 6, name: "Product 3", price: 100.0,
             image: UIImage(named: "blazer") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         let item7 = Product(
             id: 7, name: "Product 4", price: 250.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1"
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1
         )
         print("Fetch items from DB")
         completion([item1, item2, item3, item4, item5, item6, item7])
@@ -112,7 +119,7 @@ final class DataManager: DataManagerProtocol {
 
     func fetchItemsWithFilter(minPrice: Double, maxPrice: Double, сategories: [String], sellersId: [Int], completion: @escaping (([Product]) -> Void)) {
         BackendService.shared.sendRequest(endpoint: "\(host)/products?minPrice=\(minPrice)&maxPrice=\(maxPrice)&categories=\(сategories)&sellers=\(sellersId)", method: .get) { data, response, error in
-            let product = Product(id: 120, name: "Product From Seller", price: 17999, image: UIImage(named: "nike")!, description: "ajsdjasd", category: "some")
+            let product = Product(id: 120, name: "Product From Seller", price: 17999, image: UIImage(named: "nike")!, description: "ajsdjasd", category: "some", quantity: 1)
             completion([product])
         }
     }
@@ -157,21 +164,52 @@ final class DataManager: DataManagerProtocol {
         }
     }
     
-    func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void)) {
-        completion(true)
+    func topUpBalance(amount: String, completion: @escaping (Bool) -> Void) {
+        BackendService.shared.sendRequest(endpoint: "\(host)/topUp/\(amount)", method: .put) { data, response, error in
+            if error == nil, let data = data {
+                do {
+                    let json = try JSONDecoder().decode([String: String].self, from: data)
+                    if json["status"] == "success" {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                } catch {
+                    print("Error decoding response: \(error)")
+                    completion(false)
+                }
+            } else {
+                print("Error topping up balance: \(error?.localizedDescription ?? "No data")")
+                completion(false)
+            }
+        }
     }
 
-    func getBalance(completion: @escaping ((Double) -> Void)) {
-        completion(10000.0)
+    func getBalance(completion: @escaping (Double?) -> Void) {
+        BackendService.shared.sendRequest(endpoint: "\(host)/balance", method: .get) { data, response, error in
+            guard error == nil, let data = data else {
+                print("Error getting balance: \(error?.localizedDescription ?? "No data")")
+                return
+            }
+
+            do {
+                let json = try JSONDecoder().decode([String: Double].self, from: data)
+                if let balance = json["Balance"] {
+                    completion(Double(balance))
+                }
+            } catch {
+                print("Error decoding balance: \(error)")
+            }
+        }
     }
     
-    func fetchBuyersOrders(completion: @escaping ([CartProduct]) -> Void) {
+    func fetchBuyersOrders(completion: @escaping ([Product]) -> Void) {
         let product = Product(
             id: 10, name: "Adidas", price: 250.0,
             image: UIImage(named: "vans") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1")
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1)
         
-        completion([CartProduct(product: product, quantity: 1)])
+        completion([product])
     }
     
     func getAllSellers(completion: @escaping ([Seller]) -> Void) {
@@ -179,13 +217,13 @@ final class DataManager: DataManagerProtocol {
         completion(sellers)
     }
     
-    func fetchSellersOrders(completion: @escaping ([CartProduct]) -> Void) {
+    func fetchSellersOrders(completion: @escaping ([Product]) -> Void) {
         let product = Product(
             id: 20, name: "Puma67", price: 1000.0,
             image: UIImage(named: "nike") ?? UIImage(),
-            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1")
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1", quantity: 1)
         
-        completion([CartProduct(product: product, quantity: 1)])
+        completion([product])
     }
 
 }

@@ -7,6 +7,7 @@ struct Product {
     var image: UIImage
     var description: String
     var category: String
+    var quantity: Int 
 }
 
 

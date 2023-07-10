@@ -2,7 +2,7 @@ import UIKit
 
 final class CartCell: UITableViewCell {
     
-    var product: CartProduct?
+    var product: Product?
 
     private let itemInCartImageView: UIImageView = {
         let imageView = UIImageView()
@@ -50,8 +50,8 @@ final class CartCell: UITableViewCell {
     
     var viewModel: CartCellViewModelProtocol? {
         didSet {
-            titleLabel.text = viewModel?.product.product.name
-            priceLabel.text = "\(viewModel?.product.product.price ?? 0.0) ₿"
+            titleLabel.text = viewModel?.product.name
+            priceLabel.text = "\(viewModel?.product.price ?? 0.0) ₿"
             quantityLabel.text = "\(viewModel?.product.quantity ?? 1)"
             viewModel?.quantityDidChange = { [weak self] quantity in
                 DispatchQueue.main.async {
@@ -96,11 +96,11 @@ final class CartCell: UITableViewCell {
         }
     }
 
-    func configure(with product: CartProduct) {
+    func configure(with product: Product) {
         self.product = product
-        itemInCartImageView.image = product.product.image
-        titleLabel.text = product.product.name
-        priceLabel.text = "\(product.product.price) ₿"
+        itemInCartImageView.image = product.image
+        titleLabel.text = product.name
+        priceLabel.text = "\(product.price) ₿"
         quantityLabel.text = "\(product.quantity)"
     }
 

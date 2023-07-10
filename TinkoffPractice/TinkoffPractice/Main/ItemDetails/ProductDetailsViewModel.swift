@@ -46,8 +46,8 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     }
 
     func addToCart() {
-        let cartProduct = CartProduct(product: product, quantity: 1)
-        CartManager.shared.addOrIncreaseProduct(cartProduct)
+        let product = self.product
+        CartManager.shared.addOrIncreaseProduct(product)
     }
 
 }

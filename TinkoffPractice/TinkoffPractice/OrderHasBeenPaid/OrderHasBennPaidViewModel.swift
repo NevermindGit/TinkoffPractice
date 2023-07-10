@@ -3,7 +3,7 @@ import Foundation
 
 protocol OrderHasBeenPaidViewModelProtocol: AnyObject {
     var numberOfItems: Int { get }
-    func item(at index: Int) -> CartProduct
+    func item(at index: Int) -> Product
     func getDateLabel() -> String
     func getOrdersStatusViewModel(at indexPath: IndexPath) -> OrderStatusViewModelProtocol
 }
@@ -14,7 +14,7 @@ final class OrderHasBeenPaidViewModel: OrderHasBeenPaidViewModelProtocol {
         CartManager.shared.getProduct().count
     }
     
-    func item(at index: Int) -> CartProduct {
+    func item(at index: Int) -> Product {
         CartManager.shared.getProduct()[index]
     }
     

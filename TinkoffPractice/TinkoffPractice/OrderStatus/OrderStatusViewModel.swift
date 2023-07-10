@@ -1,14 +1,14 @@
 protocol OrderStatusViewModelProtocol: AnyObject {
-    var product: CartProduct { get }
+    var product: Product { get }
     func getOrderStatus(completion: @escaping((String) -> Void))
     func cancelOrder(completion: @escaping ((Bool) -> Void))
     func getUserRole(completion: @escaping(String) -> Void)
 }
 
 final class OrderStatusViewModel: OrderStatusViewModelProtocol {
-    var product: CartProduct
+    var product: Product
 
-    init(product: CartProduct) {
+    init(product: Product) {
         self.product = product
 
     }

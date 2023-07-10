@@ -2,13 +2,13 @@ import Foundation
 
 final class CartManager {
     static let shared = CartManager()
-    private var items: [CartProduct] = []
-    var productAdded: ((CartProduct) -> Void)?
+    private var items: [Product] = []
+    var productAdded: ((Product) -> Void)?
 
     private init() {}
 
-    func addOrIncreaseProduct(_ item: CartProduct) {
-        if let index = items.firstIndex(where: { $0.product.id == item.product.id }) {
+    func addOrIncreaseProduct(_ item: Product) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
             items[index].quantity += 1
         } else {
             items.append(item)
@@ -16,7 +16,7 @@ final class CartManager {
         productAdded?(items.last!)
     }
 
-    func getProduct() -> [CartProduct] {
+    func getProduct() -> [Product] {
         return items
     }
 
