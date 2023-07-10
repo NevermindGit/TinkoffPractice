@@ -50,6 +50,4 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
         CartManager.shared.addOrIncreaseProduct(cartProduct)
     }
 
-
-
 }

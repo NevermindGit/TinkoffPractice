@@ -87,9 +87,9 @@ final class SettingsViewModel: SettingsViewModelProtocol {
         case .account:
             return AccountViewController()
         case .ordersHistory:
-            return OrdersHistoryViewController()
+            return MyOrdersViewController()
         case .myProducts:
-            return MyProductsViewController()
+            return MyOrdersViewController()
         case .balance:
             return BalanceViewController()
         case .aboutApp:

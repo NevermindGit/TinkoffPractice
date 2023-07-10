@@ -18,7 +18,6 @@ final class CartCell: UITableViewCell {
     private var quantityLabel = UILabel()
     private var minusButton = UIButton()
     private var plusButton = UIButton()
-    private var quantity = 1
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,8 +30,6 @@ final class CartCell: UITableViewCell {
     }
 
     func setupViews() {
-        quantityLabel.text = "\(quantity)"
-
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
 
         minusButton.setImage(UIImage(systemName: "minus.square"), for: .normal)
@@ -41,7 +38,7 @@ final class CartCell: UITableViewCell {
         plusButton.setImage(UIImage(systemName: "plus.square"), for: .normal)
         plusButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
 
-        contentView.backgroundColor = .systemGray5
+        contentView.backgroundColor = .systemBackground
 
         contentView.addSubview(itemInCartImageView)
         contentView.addSubview(titleLabel)

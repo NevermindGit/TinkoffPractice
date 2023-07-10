@@ -27,13 +27,14 @@ final class OrderConfirmViewController: BaseViewController {
     private let deliveryPriceTitleLabel: UILabel = makeLabel(text: "Доставка", size: 16, color: .systemGray)
     private let deliveryPriceValueLabel: UILabel = makeLabel(text: "100 ₿", size: 16, color: .systemGray, alignment: .right)
     private let productsTitleLabel: UILabel = makeLabel(text: "Товары", size: 16, color: .systemGray)
-    private let productsTotalPriceLabel: UILabel = makeLabel(text: "500 ₿", size: 16, color: .systemGray, alignment: .right)
+    private let productsTotalPriceLabel: UILabel = makeLabel(text: "", size: 16, color: .systemGray, alignment: .right)
     private let totalSumTitleLabel: UILabel = makeLabel(text: "Итого", size: 18, color: .label)
-    private let totalSumValueLabel: UILabel = makeLabel(text: "600 ₿", size: 18, color: .label, alignment: .right)
+    private let totalSumValueLabel: UILabel = makeLabel(text: "", size: 18, color: .label, alignment: .right)
 
     private lazy var paymentButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Оплатить", for: .normal)
+        button.addTarget(self, action: #selector(paymentButtonDidTap), for: .touchUpInside)
         return button
     }()
 
@@ -62,6 +63,12 @@ final class OrderConfirmViewController: BaseViewController {
         label.text = text
         label.textAlignment = alignment
         return label
+    }
+    
+    @objc
+    private func paymentButtonDidTap() {
+        let orderPaidVC = OrderHasBeenPaidViewController()
+        navigationController?.pushViewController(orderPaidVC, animated: true)
     }
 
     private func setupTableFooterView() {
@@ -153,6 +160,10 @@ final class OrderConfirmViewController: BaseViewController {
 
     private func bindViewModel() {
         viewModel = OrderConfirmViewModel()
+        
+        let totalSum = viewModel.totalSum() + 100
+        totalSumValueLabel.text = String(format: "%.2f ₿", totalSum + 100)
+        productsTotalPriceLabel.text = String(format: "%.2f ₿", totalSum)
     }
 
 }
@@ -185,7 +196,9 @@ extension OrderConfirmViewController: UITableViewDataSource {
         }
 
         let item = viewModel.item(at: indexPath.row)
-        cell.configure(with: item)
+        let itemViewModel = OrderItemViewModel(cartProduct: item)
+        cell.configure(with: itemViewModel)
         return cell
     }
+
 }

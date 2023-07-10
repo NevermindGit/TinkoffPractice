@@ -53,11 +53,19 @@ final class RegistrationViewController: BaseViewController {
         guard let userInfo = userInfoTextField.text else { return }
         guard let pass = passwordTextField.text else { return }
         let userRole = userRoleSegmentedControl.selectedSegmentIndex == 0 ? "Покупатель" : "Продавец"
-        viewModel.addUserToDatabase(login: login, userInfo: userInfo, password: pass, userRole: userRole)
-            
-        DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.popToRootViewController(animated: true)
+        viewModel.addUserToDatabase(login: login, userInfo: userInfo, password: pass, userRole: userRole) { success in
+            if success {
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+            }
+            else {
+                print("Error in adding to db")
+                // MARK: - добавить алерт
+            }
         }
+            
+        
     }
     
     override func viewDidLoad() {

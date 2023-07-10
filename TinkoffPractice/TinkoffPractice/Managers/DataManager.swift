@@ -3,13 +3,16 @@ import UIKit
 import Alamofire
 
 protocol DataManagerProtocol: AnyObject {
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String)
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void))
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void)
     func fetchAllItems(completion: @escaping (([Product]) -> Void))
     func fetchItemsWithFilter(
         minPrice: Double, maxPrice: Double, сategories: [String],
         completion: @escaping (([Product]) -> Void)
     )
+    func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void))
+    func getBalance(completion: @escaping ((Double) -> Void))
+    func fetchBuyersOrders(completion: @escaping ([CartProduct]) -> Void)
 }
 
 final class DataManager: DataManagerProtocol {
@@ -18,8 +21,31 @@ final class DataManager: DataManagerProtocol {
     
     private let host = "http://127.0.0.1:5001"
 
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String) {
+    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void)) {
         print("User \(login) with role \(userRole) was added to DB")
+        
+        let parameters: Parameters = ["login": login, "username": userInfo, "role": userRole, "password": password]
+        
+        BackendService.shared.sendRequest(endpoint: "\(host)/signUp", method: .post, parameters: parameters) { data, response, error in
+            if let error = error {
+                print("Произошла ошибка: \(error)")
+            } else if let response = response {
+                switch response.statusCode {
+                case 201:
+                    print("Пользователь успешно добавлен")
+                    completion(true)
+                case 400...499:
+                    print("Ошибка на стороне клиента. Статус код: \(response.statusCode)")
+                    completion(false)
+                case 500...599:
+                    print("Ошибка на стороне сервера. Статус код: \(response.statusCode)")
+                    completion(false)
+                default:
+                    print("Неожиданный код ответа: \(response.statusCode)")
+                    completion(false)
+                }
+            }
+        }
     }
     
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void) {
@@ -133,8 +159,22 @@ final class DataManager: DataManagerProtocol {
             }
         }
     }
+    
+    func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void)) {
+        completion(true)
+    }
 
-
-
+    func getBalance(completion: @escaping ((Double) -> Void)) {
+        completion(10000.0)
+    }
+    
+    func fetchBuyersOrders(completion: @escaping ([CartProduct]) -> Void) {
+        let product = Product(
+            id: 10, name: "Adidas", price: 250.0,
+            image: UIImage(named: "vans") ?? UIImage(),
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1")
+        
+        completion([CartProduct(product: product, quantity: 1)])
+    }
 
 }

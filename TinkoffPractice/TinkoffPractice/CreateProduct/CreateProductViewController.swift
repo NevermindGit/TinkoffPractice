@@ -2,11 +2,11 @@ import UIKit
 import SnapKit
 
 final class CreateProductViewController: BaseViewController {
-    
+
     // MARK: - Properties
-    
+
     private var viewModel: CreateProductViewModelProtocol!
-    
+
     private lazy var imageButton: UIButton = {
         let button = UIButton()
         let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 60, weight: .medium)
@@ -22,20 +22,20 @@ final class CreateProductViewController: BaseViewController {
         return button
     }()
 
-    
+
     private lazy var productNameTextField: BaseTextField = createTextField(placeholder: "Название")
     private lazy var productDescriptionTextField: BaseTextField = createTextField(placeholder: "Описание")
     private lazy var productPriceTextField: BaseTextField = createTextField(placeholder: "Цена ₿")
-    
+
     private lazy var createProductButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("Создать товар", for: .normal)
         button.addTarget(self, action: #selector(createProductButtonDidTap), for: .touchUpInside)
         return button
     }()
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -103,7 +103,6 @@ final class CreateProductViewController: BaseViewController {
             return
         }
         
-        // Instantiate ViewModel with entered values
         viewModel = CreateProductViewModel(productName: name, productDescription: description, productPrice: price, productImage: image)
         
         if !viewModel.validateFields() {

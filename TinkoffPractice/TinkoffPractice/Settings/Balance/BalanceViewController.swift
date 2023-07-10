@@ -2,6 +2,8 @@ import UIKit
 
 final class BalanceViewController: BaseViewController {
     
+    private var viewModel: BalanceViewModelProtocol!
+    
     private let topUpBalanceTextField: BaseTextField = {
         let textField = BaseTextField()
         textField.placeholder = "₿"
@@ -32,13 +34,29 @@ final class BalanceViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel = BalanceViewModel()
         setupUI()
     }
     
     @objc
     private func topUpBalanceButtonDidTap() {
+        guard let amount = topUpBalanceTextField.text else {
+            return
+        }
         
+        viewModel.topUpBalance(amount: amount) { [weak self] success in
+            if success {
+                self?.getUpdatedBalance()
+            }
+        }
+    }
+    
+    private func getUpdatedBalance() {
+        viewModel.getBalance { [weak self] balance in
+            DispatchQueue.main.async {
+                self?.balanceValueLabel.text = "\(balance) ₿"
+            }
+        }
     }
     
     private func setupUI() {

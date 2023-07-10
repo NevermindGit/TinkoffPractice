@@ -143,6 +143,20 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         let height = width * 1.35
         return CGSize(width: width, height: height)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIViewPropertyAnimator(duration: 0.1, curve: .easeOut) {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }.startAnimation()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIViewPropertyAnimator(duration: 0.1, curve: .easeOut) {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }.startAnimation()
+    }
 
 }
 

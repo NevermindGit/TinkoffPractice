@@ -42,11 +42,16 @@ final class ItemCell: UICollectionViewCell {
     }
 
     private func setupUI() {
-        contentView.backgroundColor = .systemGray4
+        contentView.backgroundColor = .systemGray6
         contentView.addSubview(imageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
         contentView.layer.cornerRadius = 16
+        
+//        contentView.layer.shadowColor = UIColor.systemGray.cgColor
+//        contentView.layer.shadowOpacity = 0.3
+//        contentView.layer.shadowOffset = CGSize.zero
+//        contentView.layer.shadowRadius = 7
 
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(16)
@@ -62,7 +67,6 @@ final class ItemCell: UICollectionViewCell {
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(8)
-//            make.bottom.equalToSuperview().inset(32) // Adjust the bottom inset as needed
         }
     }
 }

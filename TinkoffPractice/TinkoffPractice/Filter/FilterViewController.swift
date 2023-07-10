@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 final class FilterViewController: BaseViewController {
+    
+    private var viewModel: FilterViewModelProtocol!
 
     private let priceLabel: UILabel = {
         let label = UILabel()
@@ -37,15 +39,9 @@ final class FilterViewController: BaseViewController {
         let button = BaseButton()
         button.setTitle("Сохранить", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         return button
     }()
-
-    private let categories: [String] = [
-        "Категория 1", "Категория 2", "Категория 3",
-        "Категория 4", "Категория 5", "Категория 6",
-        "Категория 7", "Категория 8", "Категория 9",
-        "какая то длинная категория", "Категория 9"
-    ]
 
     private var categoryButtons: [UIButton] = []
 
@@ -56,7 +52,7 @@ final class FilterViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bindViewModel()
         view.addSubview(priceLabel)
         view.addSubview(minPriceTextField)
         view.addSubview(maxPriceTextField)
@@ -67,12 +63,75 @@ final class FilterViewController: BaseViewController {
         setupConstraints()
     }
 
+    private func bindViewModel() {
+        viewModel = FilterViewModel()
+
+        viewModel.onSave = { [weak self] in
+            DispatchQueue.main.async {
+                self?.navigationController?.popViewController(animated: true)
+            }
+        }
+
+        viewModel.onError = { [weak self] error in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
+            }
+        }
+    }
+    
+    @objc
+    private func buttonPressed(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
+
+        guard let title = sender.currentTitle, let category = Category(rawValue: title) else { return }
+
+        if sender.isSelected {
+            viewModel.selectedCategories.append(category)
+        } else {
+            if let index = viewModel.selectedCategories.firstIndex(of: category) {
+                viewModel.selectedCategories.remove(at: index)
+            }
+        }
+    }
+    
+    @objc
+    private func saveButtonPressed() {
+
+        guard let minPriceText = minPriceTextField.text, let minPrice = Double(minPriceText), !minPriceText.isEmpty else {
+            return
+        }
+
+        guard let maxPriceText = maxPriceTextField.text, let maxPrice = Double(maxPriceText), !maxPriceText.isEmpty else {
+            return
+        }
+
+        let alert = UIAlertController(title: "Ошибка", message: "Минимальная цена не может быть меньше 10, а максимальная больше 1 000 000", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+        if minPrice < 10 || maxPrice > 1_000_000 {
+            present(alert, animated: true)
+        } else {
+            // Update min and max price values
+            viewModel.minPrice = minPrice
+            viewModel.maxPrice = maxPrice
+
+            viewModel.saveFilter()
+        }
+
+        dismiss(animated: true)
+    }
+
+
+
     private func setupCategoryButtons() {
         var buttonOrigin = CGPoint(x: buttonSpacing, y: 170)
 
-        for category in categories {
+        for category in viewModel.categories {
             let button = BaseButton()
-            button.setTitle(category, for: .normal)
+            button.setTitle(category.rawValue, for: .normal)
             button.setTitleColor(.label, for: .normal)
             button.backgroundColor = .systemGray5
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -123,23 +182,5 @@ final class FilterViewController: BaseViewController {
             make.width.equalTo(view.snp.width).multipliedBy(0.9)
             make.height.equalTo(56)
         }
-    }
-
-    @objc
-    private func buttonPressed(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
-
-        guard let title = sender.currentTitle else { return }
-
-        if sender.isSelected {
-            selectedCategories.append(title)
-        } else {
-            if let index = selectedCategories.firstIndex(of: title) {
-                selectedCategories.remove(at: index)
-            }
-        }
-
-        print(selectedCategories)
     }
 }
