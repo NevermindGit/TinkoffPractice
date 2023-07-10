@@ -5,13 +5,19 @@ protocol FilterViewModelProtocol {
     var maxPrice: Double? { get set }
     var onSave: (() -> Void)? { get set }
     var onError: ((Error) -> Void)? { get set }
-    
+    var sellers: [Seller] { get }
+    var selectedSellers: [Seller] { get set }
+    func getAllSellers(completion: @escaping ([Seller]) -> Void)
     func saveFilter()
 }
 
 final class FilterViewModel: FilterViewModelProtocol {
     var categories: [Category] = Category.allCases
     var selectedCategories: [Category] = []
+    
+    var sellers: [Seller] = []
+    var selectedSellers: [Seller] = []
+    
     var minPrice: Double?
     var maxPrice: Double?
     var onSave: (() -> Void)?
@@ -28,6 +34,14 @@ final class FilterViewModel: FilterViewModelProtocol {
         // После успешного сохранения вызовите замыкание onSave
         onSave?()
     }
+    
+    func getAllSellers(completion: @escaping ([Seller]) -> Void) {
+        DataManager.shared.getAllSellers { [weak self] sellers in
+            self?.sellers = sellers
+            completion(sellers)
+        }
+    }
+
 }
 
 enum FilterError: Error {

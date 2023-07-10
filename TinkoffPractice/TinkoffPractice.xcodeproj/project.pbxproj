@@ -22,6 +22,7 @@
 		7F6C6FA82A5B25DB00EE0239 /* MyOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FA72A5B25DB00EE0239 /* MyOrdersViewModel.swift */; };
 		7F6C6FAB2A5B360F00EE0239 /* MyOrdersCell .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAA2A5B360F00EE0239 /* MyOrdersCell .swift */; };
 		7F6C6FAD2A5B367300EE0239 /* MyOrdersCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAC2A5B367300EE0239 /* MyOrdersCellViewModel.swift */; };
+		7F6C6FAF2A5C281000EE0239 /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAE2A5C281000EE0239 /* Seller.swift */; };
 		7F9B177A2A56CDF8009E3F76 /* CreateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17792A56CDF8009E3F76 /* CreateProductViewController.swift */; };
 		7F9B17B12A56DF9B009E3F76 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B02A56DF9B009E3F76 /* User.swift */; };
 		7F9B17B52A56F825009E3F76 /* Credentials.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B32A56F825009E3F76 /* Credentials.xcdatamodeld */; };
@@ -91,6 +92,7 @@
 		7F6C6FA72A5B25DB00EE0239 /* MyOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewModel.swift; sourceTree = "<group>"; };
 		7F6C6FAA2A5B360F00EE0239 /* MyOrdersCell .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyOrdersCell .swift"; sourceTree = "<group>"; };
 		7F6C6FAC2A5B367300EE0239 /* MyOrdersCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersCellViewModel.swift; sourceTree = "<group>"; };
+		7F6C6FAE2A5C281000EE0239 /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
 		7F9B17792A56CDF8009E3F76 /* CreateProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductViewController.swift; sourceTree = "<group>"; };
 		7F9B17B02A56DF9B009E3F76 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F9B17B42A56F825009E3F76 /* Credentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Credentials.xcdatamodel; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				7FB3A0152A53535600F90B1A /* Product.swift */,
 				7F9B17B02A56DF9B009E3F76 /* User.swift */,
 				7F9B17D62A5974B8009E3F76 /* CartProduct.swift */,
+				7F6C6FAE2A5C281000EE0239 /* Seller.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				7F9B17C12A575128009E3F76 /* SettingsViewModel.swift in Sources */,
 				7F9B17BC2A5730A3009E3F76 /* CreateProductViewModel.swift in Sources */,
 				7FB3A0222A53535600F90B1A /* BaseViewController.swift in Sources */,
+				7F6C6FAF2A5C281000EE0239 /* Seller.swift in Sources */,
 				7F6C6F972A5AFB4600EE0239 /* OrderStatus.swift in Sources */,
 				7FB3A0032A53532200F90B1A /* CartViewModel.swift in Sources */,
 				7F2AFCFE2A59BAFC00DA388F /* OrderHasBeenPaidViewController.swift in Sources */,

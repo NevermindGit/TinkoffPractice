@@ -9,7 +9,7 @@ final class FilterViewController: BaseViewController {
         let label = UILabel()
         label.textColor = .label
         label.text = "Цена, ₿"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
     }()
 
@@ -31,7 +31,15 @@ final class FilterViewController: BaseViewController {
         let label = UILabel()
         label.textColor = .label
         label.text = "Категории"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        return label
+    }()
+    
+    private let sellersLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.text = "Продавцы"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
     }()
 
@@ -44,8 +52,10 @@ final class FilterViewController: BaseViewController {
     }()
 
     private var categoryButtons: [UIButton] = []
-
     private var selectedCategories: [String] = []
+    
+    private var sellerButtons: [UIButton] = []
+    private var selectedSellersButton: [String] = []
 
     private let buttonHeight: CGFloat = 30
     private let buttonSpacing: CGFloat = 10
@@ -53,11 +63,6 @@ final class FilterViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        view.addSubview(priceLabel)
-        view.addSubview(minPriceTextField)
-        view.addSubview(maxPriceTextField)
-        view.addSubview(categoriesLabel)
-        view.addSubview(saveFilterButton)
 
         setupCategoryButtons()
         setupConstraints()
@@ -77,6 +82,12 @@ final class FilterViewController: BaseViewController {
                 let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self?.present(alert, animated: true)
+            }
+        }
+        
+        viewModel.getAllSellers { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.setupSellerButtons()
             }
         }
     }
@@ -152,8 +163,61 @@ final class FilterViewController: BaseViewController {
             categoryButtons.append(button)
         }
     }
+    
+    private func setupSellerButtons() {
+        
+        var buttonOrigin = CGPoint(x: buttonSpacing, y: 375)
+
+        for seller in viewModel.sellers {
+            let button = BaseButton()
+            button.setTitle(seller.name, for: .normal)
+            button.setTitleColor(.label, for: .normal)
+            button.backgroundColor = .systemGray5
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+            let buttonWidth = button.intrinsicContentSize.width + 20
+
+            if buttonOrigin.x + buttonWidth > view.bounds.width {
+                buttonOrigin.x = buttonSpacing
+                buttonOrigin.y += buttonHeight + buttonSpacing
+            }
+
+            button.frame = CGRect(x: buttonOrigin.x, y: buttonOrigin.y, width: buttonWidth, height: buttonHeight)
+            buttonOrigin.x += buttonWidth + buttonSpacing
+
+            button.addTarget(self, action: #selector(sellerButtonPressed(_:)), for: .touchUpInside)
+
+            view.addSubview(button)
+
+            sellerButtons.append(button)
+        }
+    }
+    
+    @objc
+    private func sellerButtonPressed(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
+        
+        guard let title = sender.currentTitle else { return }
+        guard let seller = viewModel.sellers.first(where: { $0.name == title }) else { return }
+
+        if sender.isSelected {
+            viewModel.selectedSellers.append(seller)
+        } else {
+            if let index = viewModel.selectedSellers.firstIndex(where: { $0.name == title }) {
+                viewModel.selectedSellers.remove(at: index)
+            }
+        }
+        print(viewModel.selectedSellers)
+    }
 
     private func setupConstraints() {
+        view.addSubview(priceLabel)
+        view.addSubview(minPriceTextField)
+        view.addSubview(maxPriceTextField)
+        view.addSubview(categoriesLabel)
+        view.addSubview(saveFilterButton)
+        view.addSubview(sellersLabel)
+        
         priceLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(50)
@@ -175,6 +239,18 @@ final class FilterViewController: BaseViewController {
             make.left.equalTo(priceLabel)
             make.top.equalTo(minPriceTextField.snp.bottom).offset(20)
         }
+        
+        if let lastCategoryButton = categoryButtons.last {
+            sellersLabel.snp.makeConstraints { make in
+                make.left.equalTo(priceLabel)
+                make.top.equalTo(lastCategoryButton.snp.bottom).offset(20)
+            }
+        } else {
+            sellersLabel.snp.makeConstraints { make in
+                make.left.equalTo(priceLabel)
+                make.top.equalTo(categoriesLabel.snp.bottom).offset(20)
+            }
+        }
 
         saveFilterButton.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
@@ -183,4 +259,5 @@ final class FilterViewController: BaseViewController {
             make.height.equalTo(56)
         }
     }
+
 }

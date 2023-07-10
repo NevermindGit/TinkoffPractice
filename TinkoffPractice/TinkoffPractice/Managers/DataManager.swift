@@ -176,5 +176,10 @@ final class DataManager: DataManagerProtocol {
         
         completion([CartProduct(product: product, quantity: 1)])
     }
+    
+    func getAllSellers(completion: @escaping ([Seller]) -> Void) {
+        let sellers: [Seller] = [Seller(id: 1, name: "Ilnur"), Seller(id: 2, name: "Ilya")]
+        completion(sellers)
+    }
 
 }
