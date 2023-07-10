@@ -2,6 +2,7 @@ protocol OrderStatusViewModelProtocol: AnyObject {
     var product: CartProduct { get }
     func getOrderStatus(completion: @escaping((String) -> Void))
     func cancelOrder(completion: @escaping ((Bool) -> Void))
+    func getUserRole(completion: @escaping(String) -> Void)
 }
 
 final class OrderStatusViewModel: OrderStatusViewModelProtocol {
@@ -18,5 +19,10 @@ final class OrderStatusViewModel: OrderStatusViewModelProtocol {
     
     func cancelOrder(completion: @escaping ((Bool) -> Void)) {
         completion(true)
+    }
+    
+    func getUserRole(completion: @escaping (String) -> Void) {
+        let userRole = DataManager.shared.getUserRole()
+        completion(userRole)
     }
 }

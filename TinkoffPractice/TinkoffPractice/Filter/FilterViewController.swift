@@ -52,16 +52,13 @@ final class FilterViewController: BaseViewController {
     }()
 
     private var categoryButtons: [UIButton] = []
-    private var selectedCategories: [String] = []
-    
-    private var sellerButtons: [UIButton] = []
-    private var selectedSellersButton: [String] = []
 
     private let buttonHeight: CGFloat = 30
     private let buttonSpacing: CGFloat = 10
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = FilterViewModel()
         bindViewModel()
 
         setupCategoryButtons()
@@ -69,8 +66,6 @@ final class FilterViewController: BaseViewController {
     }
 
     private func bindViewModel() {
-        viewModel = FilterViewModel()
-
         viewModel.onSave = { [weak self] in
             DispatchQueue.main.async {
                 self?.navigationController?.popViewController(animated: true)
@@ -93,19 +88,38 @@ final class FilterViewController: BaseViewController {
     }
     
     @objc
-    private func buttonPressed(_ sender: UIButton) {
+    private func categoriesButtonPressed(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
 
         guard let title = sender.currentTitle, let category = Category(rawValue: title) else { return }
 
         if sender.isSelected {
-            viewModel.selectedCategories.append(category)
+            viewModel.selectedCategories.append(category.rawValue)
         } else {
-            if let index = viewModel.selectedCategories.firstIndex(of: category) {
+            if let index = viewModel.selectedCategories.firstIndex(of: category.rawValue) {
                 viewModel.selectedCategories.remove(at: index)
             }
         }
+        print(viewModel.selectedCategories)
+    }
+    
+    @objc
+    private func sellerButtonPressed(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
+        
+        guard let title = sender.currentTitle else { return }
+        guard let seller = viewModel.sellers.first(where: { $0.name == title }) else { return }
+
+        if sender.isSelected {
+            viewModel.selectedSellers.append(seller)
+        } else {
+            if let index = viewModel.selectedSellers.firstIndex(where: { $0.name == title }) {
+                viewModel.selectedSellers.remove(at: index)
+            }
+        }
+        print(viewModel.selectedSellers.map { $0.id })
     }
     
     @objc
@@ -156,7 +170,7 @@ final class FilterViewController: BaseViewController {
             button.frame = CGRect(x: buttonOrigin.x, y: buttonOrigin.y, width: buttonWidth, height: buttonHeight)
             buttonOrigin.x += buttonWidth + buttonSpacing
 
-            button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(categoriesButtonPressed(_:)), for: .touchUpInside)
 
             view.addSubview(button)
 
@@ -188,27 +202,11 @@ final class FilterViewController: BaseViewController {
 
             view.addSubview(button)
 
-            sellerButtons.append(button)
+//            sellerButtons.append(button)
         }
     }
     
-    @objc
-    private func sellerButtonPressed(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.backgroundColor = sender.isSelected ? .systemYellow : .systemGray5
-        
-        guard let title = sender.currentTitle else { return }
-        guard let seller = viewModel.sellers.first(where: { $0.name == title }) else { return }
-
-        if sender.isSelected {
-            viewModel.selectedSellers.append(seller)
-        } else {
-            if let index = viewModel.selectedSellers.firstIndex(where: { $0.name == title }) {
-                viewModel.selectedSellers.remove(at: index)
-            }
-        }
-        print(viewModel.selectedSellers)
-    }
+    
 
     private func setupConstraints() {
         view.addSubview(priceLabel)

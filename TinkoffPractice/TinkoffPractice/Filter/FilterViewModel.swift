@@ -1,6 +1,6 @@
 protocol FilterViewModelProtocol {
     var categories: [Category] { get }
-    var selectedCategories: [Category] { get set }
+    var selectedCategories: [Category.RawValue] { get set }
     var minPrice: Double? { get set }
     var maxPrice: Double? { get set }
     var onSave: (() -> Void)? { get set }
@@ -13,7 +13,7 @@ protocol FilterViewModelProtocol {
 
 final class FilterViewModel: FilterViewModelProtocol {
     var categories: [Category] = Category.allCases
-    var selectedCategories: [Category] = []
+    var selectedCategories: [Category.RawValue] = []
     
     var sellers: [Seller] = []
     var selectedSellers: [Seller] = []
@@ -28,10 +28,12 @@ final class FilterViewModel: FilterViewModelProtocol {
             onError?(FilterError.invalidPriceRange)
             return
         }
-
-        // Тут сохраните ваши фильтры...
-
-        // После успешного сохранения вызовите замыкание onSave
+        
+        let sellerIds = selectedSellers.map { $0.id }
+        
+        DataManager.shared.fetchItemsWithFilter(minPrice: minPrice ?? 0.0, maxPrice: maxPrice ?? 0.0, сategories: selectedCategories, sellersId: sellerIds) { products in
+            
+        }
         onSave?()
     }
     

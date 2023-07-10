@@ -12,14 +12,27 @@ final class MyOrdersViewModel: MyOrdersViewModelProtocol {
     private var products: [CartProduct] = []
 
     func getMyProducts(completion: @escaping (Result<[CartProduct], Error>) -> Void) {
-        DataManager.shared.fetchBuyersOrders { [weak self] products in
-            guard let self = self else { return }
-            if !products.isEmpty {
-                self.products = products
-                completion(.success(products))
-            } else {
-                let error = NSError(domain: "com.RocketBank.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "No articles found"])
-                completion(.failure(error))
+        if DataManager.shared.getUserRole() == "Покупатель" {
+            DataManager.shared.fetchBuyersOrders { [weak self] products in
+                guard let self = self else { return }
+                if !products.isEmpty {
+                    self.products = products
+                    completion(.success(products))
+                } else {
+                    let error = NSError(domain: "com.RocketBank.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "No articles found"])
+                    completion(.failure(error))
+                }
+            }
+        } else {
+            DataManager.shared.fetchSellersOrders { [weak self] products in
+                guard let self = self else { return }
+                if !products.isEmpty {
+                    self.products = products
+                    completion(.success(products))
+                } else {
+                    let error = NSError(domain: "com.RocketBank.app", code: 0, userInfo: [NSLocalizedDescriptionKey: "No articles found"])
+                    completion(.failure(error))
+                }
             }
         }
     }

@@ -99,10 +99,63 @@ final class OrderStatusViewController: BaseViewController {
         productQuantity.text = "x\(viewModel.product.quantity)"
     }
     
+    
+    
+    private lazy var changeOrderStatusButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Изменить статус заказа", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        button.addTarget(self, action: #selector(changeOrderStatusButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+
+    @objc
+    private func changeOrderStatusButtonDidTap() {
+        // Действия при нажатии на кнопку "Изменить статус заказа" для продавца
+    }
+
+    
     private func setupUI() {
         title = "Статус заказа"
+        showUIViaRole()
         setupConstraints()
     }
+    
+    private func showUIViaRole() {
+        viewModel.getUserRole { [weak self] userRole in
+            DispatchQueue.main.async {
+                if userRole == "Покупатель" {
+                    // Показать кнопки для покупателя
+                    self?.view.addSubview(self?.changeDeliveryAddressButton ?? UIView())
+                    self?.view.addSubview(self?.cancelOrderButton ?? UIView())
+
+                    self?.changeDeliveryAddressButton.snp.makeConstraints { make in
+                        make.top.equalTo((self?.orderDateLabel.snp.bottom)!).offset(52)
+                        make.leading.equalToSuperview().offset(16)
+                    }
+
+                    self?.cancelOrderButton.snp.makeConstraints { make in
+                        make.top.equalTo((self?.changeDeliveryAddressButton.snp.bottom)!).offset(16)
+                        make.leading.equalToSuperview().offset(16)
+                    }
+                    
+
+                    
+
+                } else if userRole == "Продавец" {
+                    // Показать кнопку для продавца
+                    self?.view.addSubview(self?.changeOrderStatusButton ?? UIView())
+
+                    self?.changeOrderStatusButton.snp.makeConstraints { make in
+                        make.top.equalTo((self?.orderDateLabel.snp.bottom)!).offset(52)
+                        make.leading.equalToSuperview().offset(16)
+                    }
+                }
+            }
+        }
+    }
+
     
     private static func makeLabel(text: String, size: Double, color: UIColor, weight: UIFont.Weight) -> UILabel {
         let label = UILabel()
@@ -111,6 +164,8 @@ final class OrderStatusViewController: BaseViewController {
         label.font = UIFont.systemFont(ofSize: size, weight: weight)
         return label
     }
+    
+    
 
     private func setupConstraints() {
         
@@ -120,8 +175,6 @@ final class OrderStatusViewController: BaseViewController {
         view.addSubview(orderRecievedStausLabel)
         view.addSubview(orderCancelledStausLabel)
         view.addSubview(orderDateLabel)
-        view.addSubview(changeDeliveryAddressButton)
-        view.addSubview(cancelOrderButton)
         view.addSubview(productName)
         view.addSubview(productImageView)
         view.addSubview(productPrice)
@@ -179,17 +232,6 @@ final class OrderStatusViewController: BaseViewController {
             make.top.equalTo(productImageView.snp.bottom).offset(32)
             make.leading.equalToSuperview().offset(16)
         }
-
-        changeDeliveryAddressButton.snp.makeConstraints { make in
-            make.top.equalTo(orderDateLabel.snp.bottom).offset(52)
-            make.leading.equalToSuperview().offset(16)
-        }
-        
-        cancelOrderButton.snp.makeConstraints { make in
-            make.top.equalTo(changeDeliveryAddressButton.snp.bottom).offset(16)
-            make.leading.equalToSuperview().offset(16)
-        }
-        
 
     }
     

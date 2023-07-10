@@ -6,10 +6,7 @@ protocol DataManagerProtocol: AnyObject {
     func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void))
     func checkIfUserExists(login: String, password: String, completion: @escaping (Bool, String, String) -> Void)
     func fetchAllItems(completion: @escaping (([Product]) -> Void))
-    func fetchItemsWithFilter(
-        minPrice: Double, maxPrice: Double, сategories: [String],
-        completion: @escaping (([Product]) -> Void)
-    )
+    func fetchItemsWithFilter(minPrice: Double, maxPrice: Double, сategories: [String], sellersId: [Int], completion: @escaping (([Product]) -> Void))
     func topUpBalance(amount: String, completion: @escaping ((Bool) -> Void))
     func getBalance(completion: @escaping ((Double) -> Void))
     func fetchBuyersOrders(completion: @escaping ([CartProduct]) -> Void)
@@ -113,11 +110,11 @@ final class DataManager: DataManagerProtocol {
         completion([item1, item2, item3, item4, item5, item6, item7])
     }
 
-    func fetchItemsWithFilter(
-        minPrice: Double, maxPrice: Double, сategories: [String],
-        completion: @escaping (([Product]) -> Void)
-    ) {
-
+    func fetchItemsWithFilter(minPrice: Double, maxPrice: Double, сategories: [String], sellersId: [Int], completion: @escaping (([Product]) -> Void)) {
+        BackendService.shared.sendRequest(endpoint: "\(host)/products?minPrice=\(minPrice)&maxPrice=\(maxPrice)&categories=\(сategories)&sellers=\(sellersId)", method: .get) { data, response, error in
+            let product = Product(id: 120, name: "Product From Seller", price: 17999, image: UIImage(named: "nike")!, description: "ajsdjasd", category: "some")
+            completion([product])
+        }
     }
     
     func getUserRole() -> String {
@@ -180,6 +177,15 @@ final class DataManager: DataManagerProtocol {
     func getAllSellers(completion: @escaping ([Seller]) -> Void) {
         let sellers: [Seller] = [Seller(id: 1, name: "Ilnur"), Seller(id: 2, name: "Ilya")]
         completion(sellers)
+    }
+    
+    func fetchSellersOrders(completion: @escaping ([CartProduct]) -> Void) {
+        let product = Product(
+            id: 20, name: "Puma67", price: 1000.0,
+            image: UIImage(named: "nike") ?? UIImage(),
+            description: "DLKFJALKFJSAD;LFASJFNSFD", category: "1")
+        
+        completion([CartProduct(product: product, quantity: 1)])
     }
 
 }

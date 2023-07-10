@@ -66,13 +66,6 @@ extension MyOrdersViewController: UITableViewDelegate {
         let orderStatusViewModel = viewModel.getOrdersStatusViewModel(at: indexPath)
         let ordersStatusVC = OrderStatusViewController(viewModel: orderStatusViewModel)
         present(ordersStatusVC, animated: true)
-//        let selectedProduct = viewModel.item(at: indexPath.row)
-//        let orderStatusVC = OrderStatusViewController()
-//        let orderStatusVM = OrderStatusViewModel(product: selectedProduct)
-//
-//        orderStatusVC.viewModel = orderStatusVM
-//        present(orderStatusVC, animated: true)
-//        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
