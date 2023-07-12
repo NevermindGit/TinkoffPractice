@@ -25,14 +25,20 @@ final class ItemDetailsViewController: BaseViewController {
     private lazy var addToCartButton: BaseButton = {
         let button = BaseButton()
         button.setTitle("В корзину", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         button.addTarget(self, action: #selector(addToCartButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var editProductButton: BaseButton = {
+        let button = BaseButton()
+        button.setTitle("Изменить", for: .normal)
+        button.addTarget(self, action: #selector(editProductButtonDidTap), for: .touchUpInside)
         return button
     }()
 
     private var itemImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
         imageView.image = UIImage(named: "placeholder")
@@ -42,7 +48,7 @@ final class ItemDetailsViewController: BaseViewController {
     var viewModel: ProductDetailsViewModelProtocol! {
         didSet {
             viewModel.productDidChange = { [weak self] in
-                self?.updateNewsLabels()
+                self?.updateProductDetails()
             }
         }
     }
@@ -59,16 +65,44 @@ final class ItemDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        updateNewsLabels()
+        updateProductDetails()
 
         viewModel.productDidChange = { [weak self] in
-            self?.updateNewsLabels()
+            self?.updateProductDetails()
+        }
+        
+        if viewModel.getUsersRole() == "Продавец" {
+            addToCartButton.isHidden = true
+            view.addSubview(editProductButton)
+            editProductButton.snp.makeConstraints { make in
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
+                make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
+                make.width.equalTo(139)
+                make.height.equalTo(37)
+            }
+        } else {
+            editProductButton.isHidden = true
+            view.addSubview(addToCartButton)
+            addToCartButton.snp.makeConstraints { make in
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
+                make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
+                make.width.equalTo(139)
+                make.height.equalTo(37)
+            }
         }
     }
 
     @objc
     private func addToCartButtonDidTap() {
         viewModel.addToCart()
+    }
+
+    @objc
+    private func editProductButtonDidTap() {
+        if viewModel.getUsersRole() == "Продавец" {
+            let editProductVC = EditProductViewController(viewModel: EditProductViewModel(product: viewModel.product))
+            present(editProductVC, animated: true, completion: nil)
+        }
     }
 
     private func setupUI() {
@@ -97,19 +131,12 @@ final class ItemDetailsViewController: BaseViewController {
         }
 
         itemPriceLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(addToCartButton.snp.centerY)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(32)
-        }
-
-        addToCartButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
-            make.width.equalTo(139)
-            make.height.equalTo(37)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(32)
         }
     }
 
-    private func updateNewsLabels() {
+    private func updateProductDetails() {
         itemTitleLabel.text = viewModel.productName
         itemDescriptionLabel.text = viewModel.productDescription
         itemImageView.image = viewModel.productImage

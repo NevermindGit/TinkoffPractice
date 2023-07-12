@@ -31,6 +31,7 @@ final class CartCell: UITableViewCell {
 
     func setupViews() {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        titleLabel.numberOfLines = 2
 
         minusButton.setImage(UIImage(systemName: "minus.square"), for: .normal)
         minusButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
@@ -43,9 +44,9 @@ final class CartCell: UITableViewCell {
         contentView.addSubview(itemInCartImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(quantityLabel)
         contentView.addSubview(minusButton)
         contentView.addSubview(plusButton)
+        contentView.addSubview(quantityLabel)
     }
     
     var viewModel: CartCellViewModelProtocol? {
@@ -95,6 +96,9 @@ final class CartCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
     }
+
+
+
 
     func configure(with product: Product) {
         self.product = product

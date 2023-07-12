@@ -9,6 +9,7 @@ final class ItemCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
@@ -47,11 +48,6 @@ final class ItemCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
         contentView.layer.cornerRadius = 16
-        
-//        contentView.layer.shadowColor = UIColor.systemGray.cgColor
-//        contentView.layer.shadowOpacity = 0.3
-//        contentView.layer.shadowOffset = CGSize.zero
-//        contentView.layer.shadowRadius = 7
 
         imageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview().inset(16)

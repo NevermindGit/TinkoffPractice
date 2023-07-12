@@ -23,6 +23,7 @@
 		7F6C6FAB2A5B360F00EE0239 /* MyOrdersCell .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAA2A5B360F00EE0239 /* MyOrdersCell .swift */; };
 		7F6C6FAD2A5B367300EE0239 /* MyOrdersCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAC2A5B367300EE0239 /* MyOrdersCellViewModel.swift */; };
 		7F6C6FAF2A5C281000EE0239 /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FAE2A5C281000EE0239 /* Seller.swift */; };
+		7F6C6FB12A5CA47000EE0239 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C6FB02A5CA47000EE0239 /* Order.swift */; };
 		7F9B177A2A56CDF8009E3F76 /* CreateProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17792A56CDF8009E3F76 /* CreateProductViewController.swift */; };
 		7F9B17B12A56DF9B009E3F76 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B02A56DF9B009E3F76 /* User.swift */; };
 		7F9B17B52A56F825009E3F76 /* Credentials.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F9B17B32A56F825009E3F76 /* Credentials.xcdatamodeld */; };
@@ -92,6 +93,7 @@
 		7F6C6FAA2A5B360F00EE0239 /* MyOrdersCell .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyOrdersCell .swift"; sourceTree = "<group>"; };
 		7F6C6FAC2A5B367300EE0239 /* MyOrdersCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersCellViewModel.swift; sourceTree = "<group>"; };
 		7F6C6FAE2A5C281000EE0239 /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
+		7F6C6FB02A5CA47000EE0239 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		7F9B17792A56CDF8009E3F76 /* CreateProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductViewController.swift; sourceTree = "<group>"; };
 		7F9B17B02A56DF9B009E3F76 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F9B17B42A56F825009E3F76 /* Credentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Credentials.xcdatamodel; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				7FB3A0152A53535600F90B1A /* Product.swift */,
 				7F9B17B02A56DF9B009E3F76 /* User.swift */,
 				7F6C6FAE2A5C281000EE0239 /* Seller.swift */,
+				7F6C6FB02A5CA47000EE0239 /* Order.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				7F9B17CA2A575FEE009E3F76 /* OptionTitle.swift in Sources */,
 				7F9B17D92A597FAF009E3F76 /* CartCellViewModel.swift in Sources */,
 				7F6C6F9A2A5B079D00EE0239 /* ChangeDeliveryAddressViewController.swift in Sources */,
+				7F6C6FB12A5CA47000EE0239 /* Order.swift in Sources */,
 				7F6C6F9E2A5B0E7A00EE0239 /* Categories.swift in Sources */,
 				7F9B17D32A576147009E3F76 /* AboutAppViewController.swift in Sources */,
 				7F6C6FAB2A5B360F00EE0239 /* MyOrdersCell .swift in Sources */,

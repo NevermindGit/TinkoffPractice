@@ -1,6 +1,8 @@
 import UIKit
 
 protocol CreateProductViewModelProtocol {
+    var categories: [Category] { get }
+    var selectedCategories: Category.RawValue { get set }
     var productName: String { get }
     var productDescription: String { get }
     var productPrice: String { get }
@@ -11,6 +13,9 @@ protocol CreateProductViewModelProtocol {
 }
 
 final class CreateProductViewModel: CreateProductViewModelProtocol {
+    
+    var categories: [Category] = Category.allCases
+    var selectedCategories: Category.RawValue = ""
     
     var productName: String
     var productDescription: String

@@ -45,17 +45,26 @@ final class BalanceViewController: BaseViewController {
             return
         }
         
+        guard viewModel.isValidAmount(amount: amount) else {
+            let alert = UIAlertController(title: "Ошибка", message: "Сумма не может быть больше 300000", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         viewModel.topUpBalance(amount: amount) { [weak self] success in
             if success {
                 self?.getUpdatedBalance()
             }
         }
     }
+
     
     private func getUpdatedBalance() {
         viewModel.getBalance { [weak self] balance in
+            guard let balance = balance else { return }
             DispatchQueue.main.async {
-                self?.balanceValueLabel.text = "\(balance ?? 1.0) ₿"
+                self?.balanceValueLabel.text = "\(balance) ₿"
             }
         }
     }

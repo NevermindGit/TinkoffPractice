@@ -8,6 +8,8 @@ protocol ProductDetailsViewModelProtocol {
     var productImage: UIImage { get }
     var productDidChange: (() -> Void)? { get set }
     func addToCart()
+    func getUsersRole() -> String
+    var product: Product { get }
 }
 
 final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
@@ -35,7 +37,7 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
 
     var productDidChange: (() -> Void)?
 
-    private let product: Product
+    var product: Product
 
     required init(product: Product) {
         self.product = product
@@ -48,6 +50,10 @@ final class ProductDetailsViewModel: ProductDetailsViewModelProtocol {
     func addToCart() {
         let product = self.product
         CartManager.shared.addOrIncreaseProduct(product)
+    }
+
+    func getUsersRole() -> String {
+        DataManager.shared.getUserRole()
     }
 
 }

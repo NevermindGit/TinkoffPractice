@@ -2,7 +2,7 @@ import Foundation
 
 protocol RegistrationViewModelProtocol {
     var registerButtonButtonTapped: (() -> Void)? { get set }
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void))
+    func addUserToDatabase(login: String, username: String, password: String, userType: String, completion: @escaping((Bool) -> Void))
 }
 
 final class RegistrationViewModel: RegistrationViewModelProtocol {
@@ -14,7 +14,9 @@ final class RegistrationViewModel: RegistrationViewModelProtocol {
         self.dataManager = dataManager
     }
 
-    func addUserToDatabase(login: String, userInfo: String, password: String, userRole: String, completion: @escaping((Bool) -> Void)) {
-        dataManager.addUserToDatabase(login: login, userInfo: userInfo, password: password, userRole: userRole, completion: completion)
+    func addUserToDatabase(login: String, username: String, password: String, userType: String, completion: @escaping((Bool) -> Void)) {
+        dataManager.addUserToDatabase(login: login, username: username, password: password, userType: userType) { success in
+            completion(true)
+        }
     }
 }

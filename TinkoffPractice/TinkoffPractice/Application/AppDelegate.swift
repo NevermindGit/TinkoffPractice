@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  test
-//
-//  Created by Vadim Valeev on 01.07.2023.
-//
-
 import UIKit
 import CoreData
 

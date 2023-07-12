@@ -23,7 +23,7 @@ final class BackendService: BackendServiceProtocol {
         }
 
         AF.request(
-            url, method: method, parameters: parameters, encoding: JSONEncoding.default
+            url, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: headers
         ).validate().response { (response) in
             switch response.result {
             case .success(let data):

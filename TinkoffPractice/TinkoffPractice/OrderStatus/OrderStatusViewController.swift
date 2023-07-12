@@ -24,7 +24,7 @@ final class OrderStatusViewController: BaseViewController {
     private var productPrice = makeLabel(text: "", size: 16, color: .label, weight: .regular)
     private var productQuantity = makeLabel(text: "", size: 16, color: .label, weight: .regular)
     
-    private var orderDateLabel = makeLabel(text: "Дата заказа", size: 16, color: .label, weight: .medium)
+    private var orderDateLabel = makeLabel(text: "Дата заказа ", size: 16, color: .label, weight: .medium)
     
     private lazy var changeDeliveryAddressButton: UIButton = {
         let button = UIButton()
@@ -97,13 +97,15 @@ final class OrderStatusViewController: BaseViewController {
         productName.text = viewModel.product.name
         productPrice.text = String(viewModel.product.price)
         productQuantity.text = "x\(viewModel.product.quantity)"
+        
+        orderDateLabel.text = viewModel.getDateLabel()
     }
     
     
     
     private lazy var changeOrderStatusButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Изменить статус заказа", for: .normal)
+        button.setTitle("Обновить статус заказа", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.addTarget(self, action: #selector(changeOrderStatusButtonDidTap), for: .touchUpInside)
@@ -112,8 +114,26 @@ final class OrderStatusViewController: BaseViewController {
 
     @objc
     private func changeOrderStatusButtonDidTap() {
-        // Действия при нажатии на кнопку "Изменить статус заказа" для продавца
+        let nextStatus = viewModel.getNextStatus()
+
+        switch nextStatus {
+        case .created:
+            break
+        case .inDelivery:
+            orderCreatedStausLabel.textColor = .systemGray
+            orderCreatedStausLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+            orderInDeliveryStausLabel.textColor = .label
+            orderInDeliveryStausLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        case .received:
+            orderInDeliveryStausLabel.textColor = .systemGray
+            orderInDeliveryStausLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+            orderRecievedStausLabel.textColor = .label
+            orderRecievedStausLabel.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        case .cancelled:
+            break
+        }
     }
+
 
     
     private func setupUI() {

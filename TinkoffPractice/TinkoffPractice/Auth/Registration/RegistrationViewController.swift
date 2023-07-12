@@ -50,10 +50,10 @@ final class RegistrationViewController: BaseViewController {
 
     private func handleRegistrationButtonTapped() {
         guard let login = loginTextField.text else { return }
-        guard let userInfo = userInfoTextField.text else { return }
+        guard let username = userInfoTextField.text else { return }
         guard let pass = passwordTextField.text else { return }
-        let userRole = userRoleSegmentedControl.selectedSegmentIndex == 0 ? "Покупатель" : "Продавец"
-        viewModel.addUserToDatabase(login: login, userInfo: userInfo, password: pass, userRole: userRole) { success in
+        let userType = userRoleSegmentedControl.selectedSegmentIndex == 0 ? "Покупатель" : "Продавец"
+        viewModel.addUserToDatabase(login: login, username: username, password: pass, userType: userType) { success in
             if success {
                 DispatchQueue.main.async { [weak self] in
                     self?.navigationController?.popToRootViewController(animated: true)

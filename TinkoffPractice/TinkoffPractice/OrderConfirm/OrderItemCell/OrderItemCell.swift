@@ -24,6 +24,8 @@ final class OrderItemCell: UITableViewCell {
 
     private func setupViews() {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        
+        titleLabel.numberOfLines = 2
 
         contentView.backgroundColor = .systemBackground
 

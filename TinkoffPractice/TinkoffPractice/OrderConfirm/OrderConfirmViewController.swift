@@ -161,7 +161,7 @@ final class OrderConfirmViewController: BaseViewController {
     private func bindViewModel() {
         viewModel = OrderConfirmViewModel()
         
-        let totalSum = viewModel.totalSum() + 100
+        let totalSum = viewModel.totalSum()
         totalSumValueLabel.text = String(format: "%.2f ₿", totalSum + 100)
         productsTotalPriceLabel.text = String(format: "%.2f ₿", totalSum)
     }
